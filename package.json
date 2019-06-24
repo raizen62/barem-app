@@ -4,7 +4,7 @@
   "description": "Aplicatie pentru baremul de detasament",
   "main": "index.js",
   "scripts": {
-    "start": "cd src && npm start",
+    "start": "cd server && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
