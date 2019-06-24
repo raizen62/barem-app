@@ -1,4 +1,4 @@
-import Case from "../models/case";
+const Case = require("../models/case");
 
 exports.create = (req, res) => {
   if (!req.body) {

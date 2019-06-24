@@ -1,4 +1,4 @@
-import "dotenv/config";
+require("dotenv/config");
 const express = require("express");
 const helmet = require("helmet");
 const cors = require("cors");
