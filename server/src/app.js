@@ -5,17 +5,13 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
-const serverless = require("serverless-http");
 
 const app = express();
-const router = express.Router();
 
 // Body Parser pentru JSON bodies in JS objects
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-app.use("/.netlify/functions/api", router); // path must route to lambda
 
 //Routes
 require("./routes/case")(app);
@@ -52,10 +48,9 @@ app.use(helmet());
 app.use(morgan("combined"));
 
 app.get("/", (req, res) => {
-  res.writeHead(200, { "Content-Type": "text/html" });
-  res.write("<h1>Hello from Express.js!</h1>");
-  res.end();
+  res.send("Welcome to our API");
 });
 
-module.exports = app;
-module.exports.handler = serverless(app);
+app.listen(process.env.PORT, () =>
+  console.log(`Example app listening on port ${process.env.PORT}!`)
+);

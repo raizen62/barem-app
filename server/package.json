@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "netlify-lambda build express",
-    "start": "node index.js",
+    "start": "node src/app.js",
     "start:dev": "nodemon --exec babel-node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,9 +15,7 @@
     "@babel/core": "^7.4.5",
     "@babel/node": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
-    "netlify-lambda": "^1.4.13",
-    "nodemon": "^1.19.1",
-    "serverless-http": "^2.0.2"
+    "nodemon": "^1.19.1"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
