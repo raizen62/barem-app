@@ -8,7 +8,7 @@ import { Case } from '../types/case';
 })
 export class CaseService {
 
-  private case: Case = {
+  case: Case = {
     numberOfVictims: null,
     context: '',
     victims: []
@@ -23,17 +23,11 @@ export class CaseService {
   }
 
   patchCase(caseUpdate: Partial<Case>):Observable<Case>{
-    // this.case = {
-    //   ...this.case,
-    //   ...caseUpdate
-    // };
 
-    if (caseUpdate.numberOfVictims) {
-      this.case.numberOfVictims = caseUpdate.numberOfVictims;
-    }
-    if (caseUpdate.context) {
-      this.case.context = caseUpdate.context;
-    }
+    this.case = {
+      ...this.case,
+      ...caseUpdate
+    };
 
     return of(this.case);
   }

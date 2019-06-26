@@ -39,11 +39,11 @@ export class CreateCaseComponent implements OnInit {
     .subscribe(res => {
       console.log(res);
       this.case = res;
-      this.setCase(this.case);
+      this.setCase();
     })
   }
 
-  setCase(caseObj: Case): void{
+  setCase(){
     if (this.case.numberOfVictims) {
       this.numberOfVictims.setValue(this.case.numberOfVictims);
     }
@@ -58,7 +58,7 @@ export class CreateCaseComponent implements OnInit {
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
 
-  patchCase(): void{
+  patchCase(){
     this.caseService.patchCase({ 
       numberOfVictims: this.numberOfVictims.value,
       context: this.context.value
