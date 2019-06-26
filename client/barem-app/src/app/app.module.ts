@@ -3,19 +3,21 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatSelectModule, MatAutocompleteModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatButtonModule, MatSelectModule, MatAutocompleteModule, MatFormFieldModule, MatInputModule, MatCardModule } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { CreateCaseComponent } from './components/create-case/create-case.component';
 import { HttpClientModule } from '@angular/common/http';
+import { VictimsListComponent } from './components/victims-list/victims-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    CreateCaseComponent
+    CreateCaseComponent,
+    VictimsListComponent
   ],
   imports: [
     BrowserModule,
@@ -29,6 +31,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatAutocompleteModule,
     MatFormFieldModule,
     MatInputModule,
+    MatCardModule,
   ],
   providers: [
     CaseService

@@ -20,7 +20,7 @@
       </mat-autocomplete>
     </mat-form-field>
 
-    <button mat-raised-button color="accent" [disabled]="!numberOfVictims.value || !context.value" (click)="patchCase()">Generează caz</button>
+    <button routerLink="./victims-list" mat-raised-button color="accent" [disabled]="!numberOfVictims.value || !context.value" (click)="patchCase()">Generează caz</button>
   </div>
 
 </div>

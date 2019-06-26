@@ -9,8 +9,8 @@ import { Case } from '../types/case';
 export class CaseService {
 
   case: Case = {
-    numberOfVictims: null,
-    context: '',
+    numberOfVictims: 3,
+    context: 'Cutremur',
     victims: []
   }
 
