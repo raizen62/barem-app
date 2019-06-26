@@ -1,0 +1,41 @@
+import { Observable, of } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Case } from '../types/case';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CaseService {
+
+  private case: Case = {
+    numberOfVictims: null,
+    context: '',
+    victims: []
+  }
+
+  constructor(
+    private http: HttpClient
+  ) { }
+
+  getCase():Observable<Case>{
+    return of(this.case);
+  }
+
+  patchCase(caseUpdate: Partial<Case>):Observable<Case>{
+    // this.case = {
+    //   ...this.case,
+    //   ...caseUpdate
+    // };
+
+    if (caseUpdate.numberOfVictims) {
+      this.case.numberOfVictims = caseUpdate.numberOfVictims;
+    }
+    if (caseUpdate.context) {
+      this.case.context = caseUpdate.context;
+    }
+
+    return of(this.case);
+  }
+
+}
