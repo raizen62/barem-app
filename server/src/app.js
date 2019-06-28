@@ -16,6 +16,7 @@ app.use(bodyParser.json());
 //Routes
 require("./routes/case")(app);
 require("./routes/victim")(app);
+require("./routes/injury")(app);
 mongoose.Promise = global.Promise;
 
 // Connecting to the database
