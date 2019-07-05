@@ -38,6 +38,7 @@ exports.create = (req, res) => {
 
 exports.findOne = (req, res) => {
   Case.find({ caseCode: req.params.caseCode })
+    .populate('victims')
     .then(caz => {
       if (!caz) {
         return res.status(400).send({

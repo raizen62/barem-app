@@ -29,6 +29,7 @@ exports.create = (req, res) => {
 
 exports.findAllByContext = (req, res) => {
   Victim.find({ context: req.params.context })
+    .populate('injuries')
     .then(victima => {
       if (!victima) {
         return res.status(400).send({
