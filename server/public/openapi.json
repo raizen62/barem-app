@@ -1,0 +1,197 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Barem App API",
+    "description": "This is the API server for the Barem App CRS1 Bucuresti.",
+    "version": "0.0.1",
+    "contact": {
+      "email": "voluntaricrs1@google.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://barem-dezastre.herokuapp.com",
+      "description": "Main server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "victims",
+      "description": "Find all the victims"
+    },
+    {
+      "name": "cases",
+      "description": "Search for the cases"
+    },
+    {
+      "name": "injuries",
+      "description": "Look for the injuries"
+    }
+  ],
+  "paths": {
+    "/victims": {
+      "get": {
+        "tags": [
+          "victims"
+        ],
+        "summary": "Returns a list of victims.",
+        "description": "Optional extended description in CommonMark or HTML.",
+        "responses": {
+          "200": {
+            "description": "A JSON array of user names"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "victims"
+        ],
+        "summary": "Add a new victim",
+        "responses": {
+          "200": {
+            "description": "Added a new Victim"
+          }
+        }
+      }
+    },
+    "/victims/{context}": {
+      "get": {
+        "tags": [
+          "victims"
+        ],
+        "summary": "Get a victim by context",
+        "parameters": [
+          {
+            "name": "context",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/victims/{id}": {
+      "delete": {
+        "tags": [
+          "victims"
+        ],
+        "summary": "Delete a victim by it's id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/cases": {
+      "get": {
+        "tags": [
+          "cases"
+        ],
+        "summary": "Add a new case",
+        "responses": {
+          "200": {
+            "description": "A JSON array of cases"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "cases"
+        ],
+        "summary": "Add a new case",
+        "responses": {
+          "200": {
+            "description": "A JSON array of cases"
+          }
+        }
+      }
+    },
+    "/cases/{caseCode}": {
+      "get": {
+        "tags": [
+          "cases"
+        ],
+        "summary": "Returns a case by it's case code",
+        "parameters": [
+          {
+            "name": "caseCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "cases"
+        ],
+        "summary": "Delete a case by it's case code",
+        "parameters": [
+          {
+            "name": "caseCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/injuries": {
+      "get": {
+        "tags": [
+          "injuries"
+        ],
+        "summary": "Returns a list of injuries.",
+        "description": "Optional extended description in CommonMark or HTML.",
+        "responses": {
+          "200": {
+            "description": "A JSON array of user names",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -8,6 +8,8 @@ const mongoose = require("mongoose");
 
 const app = express();
 
+app.use(express.static("public"));
+
 // Body Parser pentru JSON bodies in JS objects
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -15,8 +17,8 @@ app.use(bodyParser.json());
 
 // Dam enable la CORS
 app.use(cors());
-app.use(function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+app.use(function(req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   next();
 });
 
@@ -44,7 +46,6 @@ mongoose
     process.exit();
   });
 
-
 // Adaugam Helmet pentru a imbunatati securitatea
 
 app.use(helmet());
@@ -52,10 +53,6 @@ app.use(helmet());
 // Sa putem sa logam chestii pentru APIuri
 
 app.use(morgan("combined"));
-
-app.get("/", (req, res) => {
-  res.send("Welcome to our API");
-});
 
 app.listen(process.env.PORT, () =>
   console.log(`Example app listening on port ${process.env.PORT}!`)
