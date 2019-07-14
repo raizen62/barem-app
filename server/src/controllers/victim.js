@@ -27,6 +27,28 @@ exports.create = (req, res) => {
     });
 };
 
+exports.deleteOne = (req, res) => {
+  Victim.findOneAndRemove({ id: req.params.id })
+    .then(victim => {
+      if (!victim) {
+        return res.status(404).send({
+          message: "Nu a fost gasit nici o victima cu acest cod"
+        });
+      }
+      res.send({ message: "Victima a fost stears cu succes!" });
+    })
+    .catch(err => {
+      if (err.kind === "ObjectId" || err.name === "NotFound") {
+        return res.status(404).send({
+          message: "Victima cu acest cod nu a fost gasit"
+        });
+      }
+      return res.status(500).send({
+        message: "Nu s-a putut sterge victima cu acest cod"
+      });
+    });
+}
+
 exports.findAllByContext = (req, res) => {
   Victim.find({ context: req.params.context })
     .then(victima => {
