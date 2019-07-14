@@ -48,3 +48,14 @@ exports.findAllByContext = (req, res) => {
       });
     });
 };
+
+exports.findAll = (req, res) => {
+  Victim.find()
+    .then(victims => {
+        res.send(victims);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Something wrong while retrieving the victims."
+        });
+    });
+}
