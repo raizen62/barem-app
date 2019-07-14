@@ -13,6 +13,13 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// Dam enable la CORS
+app.use(cors());
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  next();
+});
+
 //Routes
 require("./routes/case")(app);
 require("./routes/victim")(app);
@@ -37,12 +44,7 @@ mongoose
     process.exit();
   });
 
-// Dam enable la CORS
-app.use(cors());
-app.use(function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  next();
-});
+
 // Adaugam Helmet pentru a imbunatati securitatea
 
 app.use(helmet());
