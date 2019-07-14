@@ -1,3 +1,4 @@
+import { switchMap, map } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
 import { CaseService } from 'src/app/services/case.service';
 import { Component, OnInit } from '@angular/core';
@@ -17,6 +18,8 @@ export class VictimsListComponent implements OnInit {
 
   victims$: Observable<Victim[]>;
   victims: Victim[];
+  pickedVictims$: Observable<Victim[]>;
+  pickedVictims: Victim[] = [];
 
   constructor(
     private caseService: CaseService
@@ -25,20 +28,79 @@ export class VictimsListComponent implements OnInit {
   ngOnInit() {
 
     this.case$ = this.caseService.getCase();
+  
     this.case$.pipe(
       untilDestroyed(this)
     )
       .subscribe(res => {
-        console.log(res);
         this.case = res;
       })
-    this.victims$ = this.caseService.getVictims(this.case.context);
-    // this.victims$.subscribe( victims => {
-      // console.log(victims as string[]);
-      // this.victims = victims;
-      // this.victims.splice(1,1);
-      // console.log(this.victims);
-    // });
+
+    this.victims$ = this.caseService.getVictims(this.case.context? this.case.context : '');
+
+    this.pickedVictims$ = this.victims$.pipe(
+      map(victims => {
+        let pickedVictims: Victim[] = [];
+
+        for (let i = 0; i < this.case.numberOfVictims ? this.case.numberOfVictims : 0; i++) {
+          let rand = Math.floor((Math.random() * victims.length));
+          pickedVictims.push(victims[rand]);
+          victims.splice(rand, 1);
+        }
+
+        console.log(pickedVictims);
+        this.pickedVictims = pickedVictims;
+
+        return pickedVictims;
+      })
+    );
+
+  }
+
+  refreshPicks(){
+    this.pickedVictims$ = this.victims$.pipe(
+      map(victims => {
+        let pickedVictims: Victim[] = [];
+
+        for (let i = 0; i < this.case.numberOfVictims ? this.case.numberOfVictims : 0; i++) {
+          let rand = Math.floor((Math.random() * victims.length));
+          pickedVictims.push(victims[rand]);
+          victims.splice(rand, 1);
+        }
+
+        return pickedVictims;
+      })
+    );
+  }
+
+  refreshPick(id: String){
+    this.pickedVictims$ = this.victims$.pipe(
+      map(victims => {
+        let picked = false;
+
+        // pick another victim
+        while (picked == false) {
+          let rand = Math.floor((Math.random() * victims.length));
+
+          // check if the victim is already picked
+          if (this.pickedVictims.filter(victim => { return victim._id == victims[rand]._id }).length <= 0) {
+            // change the old victim with the new one
+            this.pickedVictims = this.pickedVictims.map(victim => {
+              if (victim._id == id)
+                return victims[rand];
+              return victim;
+            })
+            picked = true;
+          } else {
+            // remove the bad pick in order to improve performance
+            victims.splice(rand, 1);
+          }
+        }
+
+        return this.pickedVictims;
+      })
+    );
+
   }
 
   ngOnDestroy(){

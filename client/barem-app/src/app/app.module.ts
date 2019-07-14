@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatSelectModule, MatAutocompleteModule, MatFormFieldModule, MatInputModule, MatCardModule } from '@angular/material';
+import { MatButtonModule, MatSelectModule, MatAutocompleteModule, MatFormFieldModule, MatInputModule, MatCardModule, MatIconModule } from '@angular/material';
 import { MatListModule } from '@angular/material/list';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -33,7 +33,8 @@ import { VictimsListComponent } from './components/victims-list/victims-list.com
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
-    MatListModule
+    MatListModule,
+    MatIconModule
   ],
   providers: [
     CaseService

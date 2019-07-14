@@ -12,7 +12,7 @@ export class CaseService {
 
   case: Case = {
     numberOfVictims: 3,
-    context: 'Cutremur',
+    context: 'test',
     victims: []
   }
 
@@ -29,7 +29,9 @@ export class CaseService {
       return (this.http.get('../../assets/data/victims.json') as Observable<Victim[]>).pipe(
         map(victims => {
           let filteredVictims = victims.filter(victim => victim.context.includes(context.toLowerCase())? victim : false);
-          return filteredVictims;
+          if(filteredVictims.length)
+            return filteredVictims;
+          return victims;
         })
       )
     }
