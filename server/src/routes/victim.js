@@ -3,5 +3,9 @@ module.exports = app => {
 
   app.get("/victims/:context", victims.findAllByContext);
 
+  app.get("/victims", victims.findAll);
+
   app.post("/victims", victims.create);
+
+  app.delete("/victims/:id", victims.deleteOne)
 };
