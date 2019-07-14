@@ -47,11 +47,11 @@ exports.deleteOne = (req, res) => {
         message: "Nu s-a putut sterge victima cu acest cod"
       });
     });
-}
+};
 
 exports.findAllByContext = (req, res) => {
   Victim.find({ context: req.params.context })
-    .populate('injuries')
+    .populate("injuries")
     .then(victima => {
       if (!victima) {
         return res.status(400).send({
@@ -74,11 +74,13 @@ exports.findAllByContext = (req, res) => {
 
 exports.findAll = (req, res) => {
   Victim.find()
+    .populate("injuries")
     .then(victims => {
-        res.send(victims);
-    }).catch(err => {
-        res.status(500).send({
-            message: err.message || "Something wrong while retrieving the victims."
-        });
+      res.send(victims);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: err.message || "Something wrong while retrieving the victims."
+      });
     });
-}
+};
