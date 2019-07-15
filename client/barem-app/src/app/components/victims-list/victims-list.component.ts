@@ -92,7 +92,7 @@ export class VictimsListComponent implements OnInit {
             })
             picked = true;
           } else {
-            // remove the bad pick in order to improve performance
+            // remove the bad pick for better performance
             victims.splice(rand, 1);
           }
         }
