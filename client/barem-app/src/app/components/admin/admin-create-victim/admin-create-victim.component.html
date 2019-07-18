@@ -1,0 +1,44 @@
+<app-admin-navbar></app-admin-navbar>
+<pre>{{victimForm.value | json}}</pre>
+<div class="container">
+  <h1 class="mat-headline">Adauga o victima</h1>
+  <form class="victim-form" [formGroup]="victimForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <input formControlName="name" matInput placeholder="Victim name"/>
+    </mat-form-field>
+    <div formArrayName="context">
+      <mat-form-field *ngFor="let contextName of context.controls; let i = index; let last=last">
+        <input [formControlName]="i" matInput placeholder="Victim context"/>
+        <button mat-icon-button matSuffix *ngIf="last" (click)="addContext()">
+          <mat-icon>add</mat-icon>
+        </button>
+        <button mat-icon-button matSuffix *ngIf="!last" (click)="removeContext(i)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <mat-form-field>
+      <input formControlName="age" matInput placeholder="Victim age"/>
+    </mat-form-field>
+    <mat-form-field>
+      <input formControlName="details" matInput placeholder="Victim details"/>
+    </mat-form-field>
+    <mat-form-field formArrayName="injuries" *ngFor="let injury of injuries.controls; let i = index; let last=last">
+      <input [formControlName]="i" matInput placeholder="Injuries" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let injuryAut of injuriesResults" [value]="injuryAut._id">
+          {{injuryAut.nume}}
+        </mat-option>
+      </mat-autocomplete>
+      <button mat-icon-button matSuffix *ngIf="last" (click)="addInjury()">
+        <mat-icon>add</mat-icon>
+      </button>
+      <button mat-icon-button matSuffix *ngIf="!last" (click)="removeInjury(i)">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <button mat-button color="primary">Salveaza</button>
+  </form>
+</div>
+
+<!-- pana aici e ok -->
