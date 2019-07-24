@@ -9,9 +9,10 @@ import {
   MatAutocompleteModule,
   MatFormFieldModule,
   MatInputModule,
-  MatToolbarModule, MatIconModule
+  MatToolbarModule,
+  MatIconModule,
+  MatSnackBarModule
 } from '@angular/material';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -45,7 +46,8 @@ import {AdminNavbarComponent} from './components/admin/admin-navbar/admin-navbar
     MatFormFieldModule,
     MatInputModule,
     MatToolbarModule,
-    MatIconModule
+    MatIconModule,
+    MatSnackBarModule
   ],
   providers: [CaseService],
   bootstrap: [AppComponent]

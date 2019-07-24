@@ -38,7 +38,7 @@ exports.create = (req, res) => {
 
 exports.findAll = (req, res) => {
     Case.find()
-        .populate('victims')
+        .populate({path: 'victims', populate: {path: 'injuries'}})
         .then(cases => {
             res.send(cases);
         })
@@ -51,8 +51,8 @@ exports.findAll = (req, res) => {
 
 exports.findOne = (req, res) => {
   Case.find({ caseCode: req.params.caseCode })
-    .populate('victims')
-    .then(caz => {
+      .populate({path: 'victims', populate: {path: 'injuries'}})
+      .then(caz => {
       if (!caz) {
         return res.status(400).send({
           message: "Nu a fost gasit nici un caz cu acest cod"

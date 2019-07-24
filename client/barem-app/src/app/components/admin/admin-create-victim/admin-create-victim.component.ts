@@ -3,6 +3,7 @@ import {FormGroup, FormBuilder, FormArray} from '@angular/forms';
 import {InjuryService} from 'src/app/services/injury.service';
 import {Observable} from 'rxjs';
 import {map, startWith, tap} from 'rxjs/operators';
+import {MatSnackBar} from "@angular/material";
 
 @Component({
   selector: 'app-admin-create-victim',
@@ -36,7 +37,7 @@ export class AdminCreateVictimComponent implements OnInit {
     return this.victimForm.get('injuries') as FormArray;
   }
 
-  constructor(private fb: FormBuilder, private injuryService: InjuryService) {
+  constructor(private fb: FormBuilder, private injuryService: InjuryService, private _snackBar: MatSnackBar) {
   }
 
   addContext() {
@@ -56,7 +57,9 @@ export class AdminCreateVictimComponent implements OnInit {
   }
 
   onSubmit() {
-    this.injuryService.addVictim(this.victimForm.value).subscribe();
+    this.injuryService.addVictim(this.victimForm.value).subscribe(victim => {
+      this._snackBar.open(`Victim code is ${victim._id}`);
+    });
     this.victimForm.reset();
   }
 }
