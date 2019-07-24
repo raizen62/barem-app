@@ -36,6 +36,19 @@ exports.create = (req, res) => {
     });
 };
 
+exports.findAll = (req, res) => {
+    Case.find()
+        .populate()
+        .then(cases => {
+            res.send(cases);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || "Something wrong while retrieving the cases."
+            });
+        });
+};
+
 exports.findOne = (req, res) => {
   Case.find({ caseCode: req.params.caseCode })
     .populate('victims')
