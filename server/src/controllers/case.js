@@ -38,7 +38,7 @@ exports.create = (req, res) => {
 
 exports.findAll = (req, res) => {
     Case.find()
-        .populate()
+        .populate('victims')
         .then(cases => {
             res.send(cases);
         })
