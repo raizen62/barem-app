@@ -24,6 +24,7 @@ export class AdminCreateVictimComponent implements OnInit {
   });
 
   injuriesResults;
+  newVictim;
 
   ngOnInit() {
     this.injuryService.getInjuries().subscribe(data => this.injuriesResults = data);
@@ -58,7 +59,8 @@ export class AdminCreateVictimComponent implements OnInit {
 
   onSubmit() {
     this.injuryService.addVictim(this.victimForm.value).subscribe(victim => {
-      this._snackBar.open(`Victim code is ${victim._id}`);
+      this.newVictim = victim;
+      this._snackBar.open(`Victim code is ${this.newVictim._id}`);
     });
     this.victimForm.reset();
   }

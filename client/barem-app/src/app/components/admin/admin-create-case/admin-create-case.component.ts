@@ -14,6 +14,8 @@ export class AdminCreateCaseComponent implements OnInit {
     victims: this.fb.array([''])
   })
 
+  newCase;
+
   constructor(private fb: FormBuilder, private caseService: CaseService, private _snackBar: MatSnackBar) {
   }
 
@@ -34,7 +36,8 @@ export class AdminCreateCaseComponent implements OnInit {
 
   onSubmit() {
     this.caseService.postCase(this.caseForm.value).subscribe(newCase => {
-      this._snackBar.open(`Case code is ${newCase.caseCode}`);
+      this.newCase = newCase;
+      this._snackBar.open(`Case code is ${this.newCase.caseCode}`);
     });
     this.caseForm.reset();
   }
