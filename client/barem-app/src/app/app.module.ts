@@ -22,6 +22,8 @@ import {AdminComponent} from './components/admin/admin.component';
 import {AdminCreateVictimComponent} from './components/admin/admin-create-victim/admin-create-victim.component';
 import {AdminCreateCaseComponent} from './components/admin/admin-create-case/admin-create-case.component';
 import {AdminNavbarComponent} from './components/admin/admin-navbar/admin-navbar.component';
+import {ServiceWorkerModule} from '@angular/service-worker';
+import {environment} from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,8 @@ import {AdminNavbarComponent} from './components/admin/admin-navbar/admin-navbar
     MatInputModule,
     MatToolbarModule,
     MatIconModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
   ],
   providers: [CaseService],
   bootstrap: [AppComponent]
