@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { Case } from '../types/case';
 import { switchMap, map, filter } from 'rxjs/operators';
 import { Victim } from '../types/victim';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +11,8 @@ import { environment } from 'src/environments/environment';
 export class CaseService {
 
   case: Case = {
-    numberOfVictims: 3,
-    context: 'test',
+    count: null,
+    context: '',
     victims: []
   }
 
@@ -23,22 +22,6 @@ export class CaseService {
 
   getCase():Observable<Case>{
     return of(this.case);
-  }
-
-  getVictims(context?: string): Observable<Victim[]>{
-    if(context){
-      // return (this.http.get('../../assets/data/victims.json') as Observable<Victim[]>).pipe(
-      return (this.http.get(`${environment.apiUrl}/victims`) as Observable<Victim[]>).pipe(
-        map(victims => {
-          let filteredVictims = victims.filter(victim => victim.context.includes(context.toLowerCase())? victim : false);
-          if(filteredVictims.length)
-            return filteredVictims;
-          return victims;
-        })
-      )
-    }
-    // return (this.http.get('../../assets/data/victims.json') as Observable<Victim[]>);
-    return (this.http.get(`${environment.apiUrl}/victims`) as Observable<Victim[]>);
   }
 
   patchCase(caseUpdate: Partial<Case>):Observable<Case>{

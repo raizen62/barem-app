@@ -1,3 +1,4 @@
+import { VictimService } from './services/victim.service';
 import { CaseService } from 'src/app/services/case.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -37,7 +38,8 @@ import { VictimsListComponent } from './components/victims-list/victims-list.com
     MatIconModule
   ],
   providers: [
-    CaseService
+    CaseService,
+    VictimService
   ],
   bootstrap: [AppComponent]
 })

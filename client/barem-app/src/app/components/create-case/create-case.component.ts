@@ -16,7 +16,7 @@ export class CreateCaseComponent implements OnInit {
   case$: Observable<Case>;
   case: Case;
 
-  numberOfVictims = new FormControl();
+  count = new FormControl();
   context = new FormControl();
   options: string[] = ['Cutremur', 'Incendiu', 'Inundatie'];
   filteredOptions: Observable<string[]>;
@@ -44,8 +44,8 @@ export class CreateCaseComponent implements OnInit {
   }
 
   setCase(){
-    if (this.case.numberOfVictims) {
-      this.numberOfVictims.setValue(this.case.numberOfVictims);
+    if (this.case.count) {
+      this.count.setValue(this.case.count);
     }
     if (this.case.context) {
       this.context.setValue(this.case.context);
@@ -60,7 +60,7 @@ export class CreateCaseComponent implements OnInit {
 
   patchCase(){
     this.caseService.patchCase({ 
-      numberOfVictims: this.numberOfVictims.value,
+      count: this.count.value,
       context: this.context.value
     }).pipe(
       untilDestroyed(this)
