@@ -5,10 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 import {AdminComponent} from './components/admin/admin.component';
 import {AdminCreateCaseComponent} from './components/admin/admin-create-case/admin-create-case.component';
 import {AdminCreateVictimComponent} from './components/admin/admin-create-victim/admin-create-victim.component';
+import { VictimsListComponent } from './components/victims-list/victims-list.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'create-case', component: CreateCaseComponent},
+  {path: 'create-case/victims-list', component: VictimsListComponent },
   {path: 'admin', component: AdminComponent},
   {path: 'admin/create-case', component: AdminCreateCaseComponent},
   {path: 'admin/create-victim', component: AdminCreateVictimComponent}

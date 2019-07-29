@@ -1,5 +1,5 @@
 export interface Case{
-    numberOfVictims?: number,
     context?: string,
+    count?: number,
     victims?: string[]
 }

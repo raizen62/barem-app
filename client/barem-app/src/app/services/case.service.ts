@@ -2,6 +2,8 @@ import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Case } from '../types/case';
+import { switchMap, map, filter } from 'rxjs/operators';
+import { Victim } from '../types/victim';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +11,7 @@ import { Case } from '../types/case';
 export class CaseService {
 
   case: Case = {
-    numberOfVictims: null,
+    count: null,
     context: '',
     victims: []
   }
