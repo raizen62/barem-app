@@ -36,9 +36,23 @@ exports.create = (req, res) => {
     });
 };
 
+exports.findAll = (req, res) => {
+    Case.find()
+        .populate({path: 'victims', populate: {path: 'injuries'}})
+        .then(cases => {
+            res.send(cases);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || "Something wrong while retrieving the cases."
+            });
+        });
+};
+
 exports.findOne = (req, res) => {
   Case.find({ caseCode: req.params.caseCode })
-    .then(caz => {
+      .populate({path: 'victims', populate: {path: 'injuries'}})
+      .then(caz => {
       if (!caz) {
         return res.status(400).send({
           message: "Nu a fost gasit nici un caz cu acest cod"

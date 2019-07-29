@@ -3,6 +3,8 @@ module.exports = app => {
 
   app.get("/cases/:caseCode", cases.findOne);
 
+    app.get('/cases', cases.findAll);
+
   app.post("/cases", cases.create);
 
   app.delete("/cases/:caseCode", cases.delete);

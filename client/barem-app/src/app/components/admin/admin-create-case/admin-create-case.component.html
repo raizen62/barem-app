@@ -1,0 +1,18 @@
+<app-admin-navbar></app-admin-navbar>
+<div class="container">
+<h1 class="mat-headline">Adauga un caz</h1>
+  <form (ngSubmit)="onSubmit()" [formGroup]="caseForm" class="case-form">
+    <div formArrayName="victims">
+      <mat-form-field *ngFor="let victim of victims.controls; let i = index; let last=last">
+        <input [formControlName]="i" matInput placeholder="Add a victim">
+        <button (click)="addVictim()" *ngIf="last" mat-icon-button matSuffix>
+          <mat-icon>add</mat-icon>
+        </button>
+        <button (click)="removeVictim(i)" *ngIf="!last" mat-icon-button matSuffix>
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <button color="primary" mat-button>Save</button>
+  </form>
+</div>

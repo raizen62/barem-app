@@ -20,11 +20,15 @@ export class CaseService {
     private http: HttpClient
   ) { }
 
-  getCase():Observable<Case>{
+  getCase(): Observable<Case> {
     return of(this.case);
   }
 
-  patchCase(caseUpdate: Partial<Case>):Observable<Case>{
+  postCase(caz) {
+    return this.http.post('https://barem-dezastre.herokuapp.com/cases', caz);
+  }
+
+  patchCase(caseUpdate: Partial<Case>): Observable<Case> {
 
     this.case = {
       ...this.case,
