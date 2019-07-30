@@ -11,7 +11,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 export class AdminCreateCaseComponent implements OnInit {
 
   caseForm = this.fb.group({
-    victims: this.fb.array([''])
+    victims: this.fb.array(['']),
+    context: ['']
   })
 
   newCase;
@@ -32,6 +33,17 @@ export class AdminCreateCaseComponent implements OnInit {
 
   removeVictim(i) {
     this.victims.removeAt(i);
+  }
+
+  onVictimChange(i) {
+    if (this.victims.value[i] === '' && this.victims.length > 1) {
+      this.removeVictim(i);
+    }
+    this.victims.valueChanges.subscribe(victims => {
+      if (this.victims.value[this.victims.value.length - 1] !== '') {
+        this.addVictim();
+      }
+    });
   }
 
   onSubmit() {

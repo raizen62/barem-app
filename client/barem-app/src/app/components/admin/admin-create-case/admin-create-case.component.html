@@ -4,7 +4,7 @@
   <form (ngSubmit)="onSubmit()" [formGroup]="caseForm" class="case-form">
     <div formArrayName="victims">
       <mat-form-field *ngFor="let victim of victims.controls; let i = index; let last=last">
-        <input [formControlName]="i" matInput placeholder="Add a victim">
+        <input (keydown)="onVictimChange(i)" [formControlName]="i" matInput placeholder="Add a victim">
         <button (click)="addVictim()" *ngIf="last" mat-icon-button matSuffix>
           <mat-icon>add</mat-icon>
         </button>
@@ -13,6 +13,9 @@
         </button>
       </mat-form-field>
     </div>
+    <mat-form-field>
+      <input formControlName="context" matInput placeholder="Case context"/>
+    </mat-form-field>
     <button color="primary" mat-button>Save</button>
   </form>
 </div>
