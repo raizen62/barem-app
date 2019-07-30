@@ -21,6 +21,7 @@ exports.create = (req, res) => {
 
   const caz = new Case({
     caseCode: codCaz,
+      context: req.body.context,
     victims: req.body.victims
   });
 
