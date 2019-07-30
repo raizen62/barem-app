@@ -47,6 +47,9 @@ export class AdminCreateCaseComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.caseForm.value.victims[this.caseForm.value.victims.length - 1] === '') {
+      this.caseForm.value.victims.pop();
+    }
     this.caseService.postCase(this.caseForm.value).subscribe(newCase => {
       this.newCase = newCase;
       this._snackBar.open(`Case code is ${this.newCase.caseCode}`);
