@@ -16,9 +16,9 @@
     </div>
     <mat-card-content>
       <mat-list>
-        <mat-list-item *ngFor="let lesion of victim.lesions"> 
+        <mat-list-item *ngFor="let injury of victim.injuries"> 
           <mat-icon aria-hidden="false">arrow_right</mat-icon>
-          {{ lesion.name }}  
+          {{ injury.nume }}  
         </mat-list-item>
       </mat-list>
     </mat-card-content>
@@ -28,7 +28,8 @@
     <button mat-icon-button color="accent" (click)="refreshPicks()">
       <mat-icon>refresh</mat-icon>
     </button>
-    <button routerLink="/case" mat-raised-button color="accent">Începe caz</button>
+    <button (click)="createCase()" mat-raised-button color="accent">Începe caz</button>
   </div>
-  
+
 </div>
+<app-case-code *ngIf="caseCode.length == 4" [caseCode]="caseCode"></app-case-code>

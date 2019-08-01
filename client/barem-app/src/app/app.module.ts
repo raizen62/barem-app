@@ -28,6 +28,10 @@ import { AdminCreateCaseComponent } from './components/admin/admin-create-case/a
 import { AdminNavbarComponent } from './components/admin/admin-navbar/admin-navbar.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { CaseComponent } from './components/case/case.component';
+import { AccessCaseComponent } from './components/access-case/access-case.component';
+import { CaseCodeComponent } from './components/case-code/case-code.component';
+import { BaremComponent } from './components/barem/barem.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +42,11 @@ import { environment } from '../environments/environment';
     AdminComponent,
     AdminCreateVictimComponent,
     AdminCreateCaseComponent,
-    AdminNavbarComponent
+    AdminNavbarComponent,
+    CaseComponent,
+    AccessCaseComponent,
+    CaseCodeComponent,
+    BaremComponent
   ],
   imports: [
     BrowserModule,

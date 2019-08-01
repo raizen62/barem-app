@@ -15,7 +15,8 @@ export class VictimService {
   ) { }
 
   getVictims(filters: VictimFilters): Observable<Victim[]> {
-    return (this.http.get('../../assets/data/victims.json') as Observable<Victim[]>).pipe(
+    // return (this.http.get('../../assets/data/victims.json') as Observable<Victim[]>).pipe(
+    return (this.http.get('https://barem-dezastre.herokuapp.com/victims') as Observable<Victim[]>).pipe(
       map(victims => {
         let allVictims = [...victims];
 
