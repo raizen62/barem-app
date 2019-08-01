@@ -1,5 +1,6 @@
 export interface Case{
-    numberOfVictims?: number,
     context?: string,
-    victims?: string[]
+    count?: number,
+    victims?: string[],
+    caseCode?: string
 }

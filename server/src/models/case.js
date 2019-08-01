@@ -3,6 +3,7 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 
 const CaseSchema = mongoose.Schema({
   caseCode: String,
+  context: String,
   victims: [
     {
       type: ObjectId,

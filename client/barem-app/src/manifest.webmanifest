@@ -1,8 +1,8 @@
 {
   "name": "Barem dezastre",
-  "short_name": "Barem",
-  "theme_color": "ed1b2e",
-  "background_color": "ed1b2e",
+  "short_name": "Barem dezastre",
+  "theme_color": "#ed1b2e",
+  "background_color": "#ed1b2e",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
