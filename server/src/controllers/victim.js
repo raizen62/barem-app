@@ -86,7 +86,7 @@ exports.findAll = (req, res) => {
 };
 
 exports.findOne = (req, res) => {
-    Victim.findById(req.params.id)
+    Victim.find({ id: req.params.id })
         .populate('injuries')
         .then(victim => {
             if (!victim) {
