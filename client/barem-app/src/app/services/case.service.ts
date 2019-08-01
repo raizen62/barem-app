@@ -11,8 +11,8 @@ import { Victim } from '../types/victim';
 export class CaseService {
 
   case: Case = {
-    count: null,
-    context: '',
+    count: 3,
+    context: 'cutremur',
     victims: []
   }
 
@@ -24,8 +24,12 @@ export class CaseService {
     return of(this.case);
   }
 
-  postCase(caz) {
-    return this.http.post('https://barem-dezastre.herokuapp.com/cases', caz);
+  getCaseByCode(caseCode: string): Observable<Case>{
+    return this.http.get(`https://barem-dezastre.herokuapp.com/cases/${caseCode}`).pipe(map(cs => cs[0]));
+  }
+
+  postCase(cs: Case): Observable<Case> {
+    return this.http.post(`https://barem-dezastre.herokuapp.com/cases`, cs);
   }
 
   patchCase(caseUpdate: Partial<Case>): Observable<Case> {

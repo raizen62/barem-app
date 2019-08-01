@@ -1,8 +1,8 @@
-import { Manoeuvre } from './manoeuvre.d';
+import { Injury } from './injury';
 export interface Victim {
-    _id?: any,
-    name: string,
-    age: number,
-    context: string[],
-    lesions: Manoeuvre[]
+  _id?: any;
+  name: string;
+  age: number;
+  context: string[];
+  injuries: Injury[];
 }

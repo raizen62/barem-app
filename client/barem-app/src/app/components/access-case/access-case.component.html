@@ -1,0 +1,15 @@
+
+<div class="container">
+    <h2 class="mat-headline"> Introdu codul cazului</h2>
+
+    <div class="form">
+        <mat-form-field class="example-full-width">
+            <input matInput [formControl]="caseCode" placeholder="Codul cazului">
+            <mat-hint *ngIf="wrongCodeError">Nu exista caz cu codul adaugat</mat-hint>
+        </mat-form-field>
+
+        <button mat-raised-button color="accent" [disabled]="!(caseCode.value.length == 4)"
+            (click)="accessCase()">Accesează caz</button>
+    </div>
+    
+</div>
