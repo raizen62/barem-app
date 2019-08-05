@@ -14,6 +14,10 @@ export class VictimService {
     private http: HttpClient
   ) { }
 
+  getVictim(victimId) {
+    return this.http.get(`https://barem-dezastre.herokuapp.com/victims/${victimId}`);
+  }
+
   getVictims(filters: VictimFilters): Observable<Victim[]> {
     // return (this.http.get('../../assets/data/victims.json') as Observable<Victim[]>).pipe(
     return (this.http.get('https://barem-dezastre.herokuapp.com/victims') as Observable<Victim[]>).pipe(
@@ -78,7 +82,7 @@ export class VictimService {
       pickedVictims.push(victims[rand]);
       victims.splice(rand, 1);
     }
-    
+
     return pickedVictims;
   }
 

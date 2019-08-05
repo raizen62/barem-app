@@ -21,7 +21,9 @@
         </mat-card-content>
 
         <mat-card-actions>
-            <button mat-button color="accent">Arbitrează</button>
+          <button [routerLink]="'../' + (case$ | async)?.caseCode + '/barem/' + victim._id" color="accent" mat-button>
+            Arbitrează
+          </button>
         </mat-card-actions>
     </mat-card>
 

@@ -11,15 +11,15 @@ import { VictimsListComponent } from './components/victims-list/victims-list.com
 import { BaremComponent } from './components/barem/barem.component';
 
 const routes: Routes = [
-  { path: "", component: HomeComponent },
-  { path: "access-case", component: AccessCaseComponent },
-  { path: "case/:id", component: CaseComponent },
-  { path: "barem/:id", component: BaremComponent },
-  { path: "create-case", component: CreateCaseComponent },
-  { path: "create-case/victims-list", component: VictimsListComponent },
-  { path: "admin", component: AdminComponent },
-  { path: "admin/create-case", component: AdminCreateCaseComponent },
-  { path: "admin/create-victim", component: AdminCreateVictimComponent }
+  {path: '', component: HomeComponent},
+  {path: 'access-case', component: AccessCaseComponent},
+  {path: 'case/:id', component: CaseComponent},
+  {path: 'case/:id/barem/:victimId', component: BaremComponent},
+  {path: 'create-case', component: CreateCaseComponent},
+  {path: 'create-case/victims-list', component: VictimsListComponent},
+  {path: 'admin', component: AdminComponent},
+  {path: 'admin/create-case', component: AdminCreateCaseComponent},
+  {path: 'admin/create-victim', component: AdminCreateVictimComponent}
 ];
 
 @NgModule({
