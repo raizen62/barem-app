@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
+import { Injury } from '../types/injury';
 
 @Injectable({
   providedIn: 'root'
@@ -15,5 +16,9 @@ export class InjuryService {
 
   addVictim(hero) {
     return this.http.post('https://barem-dezastre.herokuapp.com/victims', hero);
+  }
+
+  getDefaultInjuries(): Observable<Injury[]> {
+    return (this.http.get('../../assets/data/defaultInjuries.json') as Observable<Injury[]>);
   }
 }

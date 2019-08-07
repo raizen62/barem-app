@@ -1,1 +1,26 @@
-<p>barem works!</p>
+<div class="container">
+    <div class="header-container">
+        <h2 class="mat-headline">{{ (victim$ | async)?.name + ', ' + (victim$ | async)?.age }}</h2>
+        <h2 class="mat-caption text-center">{{ (case$ | async)?.context }}</h2>
+    
+        <p class="victim-injuries mat-caption">
+            {{ (victim$ | async)?.injuries | injuriesToString }}
+        </p>
+    </div>
+    
+    <div class="injuries-container">
+        <app-injury *ngFor="let injury of (baremStart$ | async)" [injury]="injury"
+            (scoreEmitter)="calculateScore($event)"></app-injury>
+        <app-injury *ngFor="let injury of (victim$ | async)?.injuries" [injury]="injury"
+            (scoreEmitter)="calculateScore($event)"></app-injury>
+        <app-injury *ngFor="let injury of (baremEnd$ | async)" [injury]="injury" 
+            (scoreEmitter)="calculateScore($event)"></app-injury>
+    </div>
+    
+    <div class="score-container">
+        <h5 class="mat-h5">Punctaj</h5>
+        <span>{{ score }}<small>/ {{ totalScore }}</small></span>
+    </div>
+    
+    <button routerLink="/" mat-raised-button color="accent">Încheie caz</button>
+</div>

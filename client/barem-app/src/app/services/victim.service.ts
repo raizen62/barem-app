@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Victim } from '../types/victim';
-import { map } from 'rxjs/operators';
+import { map, find } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -14,15 +14,15 @@ export class VictimService {
     private http: HttpClient
   ) { }
 
-  getVictim(victimId) {
-    return this.http.get(`https://barem-dezastre.herokuapp.com/victims/${victimId}`);
+  getVictim(victimId: string): Observable<Victim> {
+    return this.http.get(`https://barem-dezastre.herokuapp.com/victims/${victimId}`) as Observable<Victim>;
   }
 
   getVictims(filters: VictimFilters): Observable<Victim[]> {
     // return (this.http.get('../../assets/data/victims.json') as Observable<Victim[]>).pipe(
     return (this.http.get('https://barem-dezastre.herokuapp.com/victims') as Observable<Victim[]>).pipe(
       map(victims => {
-        let allVictims = [...victims];
+        const allVictims = [...victims];
 
         victims = this.filterByContext(victims, filters.context || '');
         victims = this.filterByIds(victims, filters.excludeIds || []);
@@ -30,24 +30,21 @@ export class VictimService {
         let pickedVictims: Victim[] = [];
 
           // if there are enough victims filtered by context and ids, expand the victims by including the victims that were excluded
-        if (victims.length >= filters.count){
+        if (victims.length >= filters.count) {
           pickedVictims =  this.pickVictims(victims, filters.count);
-        }
-        else{
+        } else {
           pickedVictims = victims;
-          let victimsExpandedByIds = this.filterByIds(this.filterByContext(allVictims, filters.context), this.getVictimsIds(pickedVictims));
+          const victimsExpandedByIds = this.filterByIds(this.filterByContext(allVictims, filters.context), this.getVictimsIds(pickedVictims));
 
           // if there are not enough victims filtered by context, expand the victims list by including victims with other contexts
-          if (victimsExpandedByIds.length >= filters.count - pickedVictims.length){
+          if (victimsExpandedByIds.length >= filters.count - pickedVictims.length) {
             pickedVictims = pickedVictims.concat(this.pickVictims(victimsExpandedByIds, filters.count - victims.length));
-          }
-          else {
+          } else {
 
             // if there are not enough victims in total, return all of them
-            if(allVictims.length >= filters.count){
+            if (allVictims.length >= filters.count) {
               pickedVictims = victims.concat(this.pickVictims(allVictims, filters.count - victims.length));
-            }
-            else{
+            } else {
               pickedVictims = allVictims;
             }
           }
@@ -63,22 +60,23 @@ export class VictimService {
     return victims.map(victim => victim._id);
   }
 
-  filterByIds(victims: Victim[], excludeIds: string[]): Victim[]{
+  filterByIds(victims: Victim[], excludeIds: string[]): Victim[] {
     return victims.filter(victim => !excludeIds.includes(victim._id));
   }
 
-  filterByContext(victims: Victim[], context: string): Victim[]{
-    let filteredVictims = victims.filter(victim => victim.context.includes(context.toLowerCase()) ? victim : false);
-    if (filteredVictims.length)
+  filterByContext(victims: Victim[], context: string): Victim[] {
+    const filteredVictims = victims.filter(victim => victim.context.includes(context.toLowerCase()) ? victim : false);
+    if (filteredVictims.length) {
       return filteredVictims;
+    }
     return victims;
   }
 
-  pickVictims(victims: Victim[], count: number): Victim[]{
-    let pickedVictims: Victim[] = [];
+  pickVictims(victims: Victim[], count: number): Victim[] {
+    const pickedVictims: Victim[] = [];
 
     for (let i = 0; i < count || 0; i++) {
-      let rand = Math.floor((Math.random() * victims.length));
+      const rand = Math.floor((Math.random() * victims.length));
       pickedVictims.push(victims[rand]);
       victims.splice(rand, 1);
     }

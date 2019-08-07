@@ -1,3 +1,5 @@
+import { InjuryService } from './services/injury.service';
+import { ManeuverService } from './services/maneuver.service';
 import { VictimService } from './services/victim.service';
 import { CaseService } from 'src/app/services/case.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -14,7 +16,8 @@ import {
   MatIconModule,
   MatSnackBarModule,
   MatCardModule,
-  MatListModule
+  MatListModule,
+  MatTreeModule
 } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -32,6 +35,9 @@ import { CaseComponent } from './components/case/case.component';
 import { AccessCaseComponent } from './components/access-case/access-case.component';
 import { CaseCodeComponent } from './components/case-code/case-code.component';
 import { BaremComponent } from './components/barem/barem.component';
+import { InjuriesToStringPipe } from './pipes/injuries-to-string.pipe';
+import { InjuryComponent } from './components/barem/injury/injury.component';
+import { ManeuverComponent } from './components/barem/injury/maneuver/maneuver.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +52,10 @@ import { BaremComponent } from './components/barem/barem.component';
     CaseComponent,
     AccessCaseComponent,
     CaseCodeComponent,
-    BaremComponent
+    BaremComponent,
+    InjuriesToStringPipe,
+    InjuryComponent,
+    ManeuverComponent
   ],
   imports: [
     BrowserModule,
@@ -65,11 +74,14 @@ import { BaremComponent } from './components/barem/barem.component';
     MatListModule,
     MatIconModule,
     MatSnackBarModule,
+    MatTreeModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
   ],
   providers: [
     CaseService,
-    VictimService
+    VictimService,
+    InjuryService,
+    ManeuverService
   ],
   bootstrap: [AppComponent]
 })
