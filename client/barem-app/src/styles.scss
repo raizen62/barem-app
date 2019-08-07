@@ -12,3 +12,23 @@ body{
 .mat-headline{
     color: rgba($color: #000, $alpha: 0.87);
 }
+
+.text-center{
+    text-align: center;
+}
+
+app-maneuver {
+  &:not(:last-child) { 
+    .maneuver-container {
+      border-bottom: solid 1px rgba($color: black, $alpha: 0.08);
+    }
+  }
+}
+
+app-injury {
+  &:not(:last-child) {
+    .injury-container{
+      margin-bottom: 24px;
+    }
+  }
+}

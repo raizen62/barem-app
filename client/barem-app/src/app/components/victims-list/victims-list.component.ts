@@ -9,15 +9,15 @@ import { Victim } from 'src/app/types/victim';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: "app-victims-list",
-  templateUrl: "./victims-list.component.html",
-  styleUrls: ["./victims-list.component.scss"]
+  selector: 'app-victims-list',
+  templateUrl: './victims-list.component.html',
+  styleUrls: ['./victims-list.component.scss']
 })
 export class VictimsListComponent implements OnInit {
   case$: Observable<Case>;
   pick$: Subject<string> = new Subject<null>();
   pickedVictims$: Observable<Victim[]>;
-  caseCode: string = '';
+  caseCode = '';
 
   constructor(
     private caseService: CaseService,
@@ -29,14 +29,16 @@ export class VictimsListComponent implements OnInit {
     this.case$ = this.caseService.getCase().pipe(shareReplay(1));
 
     this.pickedVictims$ = this.pick$.pipe(
+      // tslint:disable-next-line: deprecation
       startWith(null),
       withLatestFrom(this.case$),
       mergeScan(
         (prev, [victimId, cs]) => {
-          if (victimId) return this.replaceVictimsByIds(prev, cs, [victimId]);
+          if (victimId) { return this.replaceVictimsByIds(prev, cs, [victimId]); }
 
-          if (prev.length)
+          if (prev.length) {
             return this.replaceVictimsByIds(prev, cs, this.getVictimsIds(prev));
+          }
 
           return this.victimService.getVictims({
             context: cs.context,
