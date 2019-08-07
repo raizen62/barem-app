@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Victim } from '../types/victim';
-import { map } from 'rxjs/operators';
+import { map, find } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,13 @@ export class VictimService {
   constructor(
     private http: HttpClient
   ) { }
+
+  getVictimById(id: string): Observable<Victim> {
+
+    return (this.http.get('https://barem-dezastre.herokuapp.com/victims') as Observable<Victim>).pipe(
+      find(victim => victim._id == id)
+    );
+  }
 
   getVictims(filters: VictimFilters): Observable<Victim[]> {
     // return (this.http.get('../../assets/data/victims.json') as Observable<Victim[]>).pipe(
