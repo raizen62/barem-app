@@ -84,3 +84,21 @@ exports.findAll = (req, res) => {
       });
     });
 };
+
+exports.findOne = (req, res) => {
+    Victim.findById(req.params.id)
+        .populate('injuries')
+        .then(victim => {
+            if (!victim) {
+                return res.status(400).send({
+                    message: "No victim with this id was found"
+                })
+            }
+            res.send(victim)
+        })
+        .catch(err => {
+            return res.status(500).send({
+                message: "Something went wrong in finding this victim"
+            })
+        })
+}

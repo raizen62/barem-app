@@ -14,11 +14,16 @@ export class VictimService {
     private http: HttpClient
   ) { }
 
+<<<<<<< HEAD
   getVictimById(id: string): Observable<Victim> {
 
     return (this.http.get('https://barem-dezastre.herokuapp.com/victims') as Observable<Victim>).pipe(
       find(victim => victim._id == id)
     );
+=======
+  getVictim(victimId) {
+    return this.http.get(`https://barem-dezastre.herokuapp.com/victims/${victimId}`);
+>>>>>>> 0ba3fcc031ea908f0da67edd9adb0527e1211a82
   }
 
   getVictims(filters: VictimFilters): Observable<Victim[]> {
@@ -85,7 +90,7 @@ export class VictimService {
       pickedVictims.push(victims[rand]);
       victims.splice(rand, 1);
     }
-    
+
     return pickedVictims;
   }
 
