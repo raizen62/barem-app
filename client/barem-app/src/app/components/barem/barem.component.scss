@@ -53,8 +53,25 @@
 
 .injuries-container{
   margin-bottom: 60px;
+  box-sizing: border-box;
 }
 
 .score-container{
   margin-bottom: 30px;
+}
+
+.injuries-summary-container{
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-bottom: 30px;
+}
+
+.injuries-summary{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+
+  .victim-name{
+    margin-bottom: 4px;
+  }
 }

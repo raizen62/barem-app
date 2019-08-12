@@ -17,7 +17,8 @@ import {
   MatSnackBarModule,
   MatCardModule,
   MatListModule,
-  MatTreeModule
+  MatTreeModule,
+  MatSlideToggleModule
 } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -38,6 +39,7 @@ import { BaremComponent } from './components/barem/barem.component';
 import { InjuriesToStringPipe } from './pipes/injuries-to-string.pipe';
 import { InjuryComponent } from './components/barem/injury/injury.component';
 import { ManeuverComponent } from './components/barem/injury/maneuver/maneuver.component';
+
 
 @NgModule({
   declarations: [
@@ -75,6 +77,7 @@ import { ManeuverComponent } from './components/barem/injury/maneuver/maneuver.c
     MatIconModule,
     MatSnackBarModule,
     MatTreeModule,
+    MatSlideToggleModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
   ],
   providers: [
