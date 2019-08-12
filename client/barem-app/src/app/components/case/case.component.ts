@@ -31,6 +31,5 @@ export class CaseComponent implements OnInit {
     );
 
     this.chief$ = this.victimService.getChief();
-    this.chief$.subscribe(res => console.log(res));
   }
 }

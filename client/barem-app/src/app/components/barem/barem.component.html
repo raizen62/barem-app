@@ -12,7 +12,11 @@
         </p>
     </div>
     
-    <div class="injuries-container">
+    <div *ngIf="(case$ | async)?.context && chief === true" class="injuries-container">
+        <app-injury *ngFor="let injury of (victim$ | async)?.injuries" [injury]="injury"
+            (scoreEmitter)="calculateScore($event)"></app-injury>
+    </div>
+    <div *ngIf="(case$ | async)?.context && chief === false" class="injuries-container">
         <app-injury *ngFor="let injury of (baremStart$ | async)" [injury]="injury"
             (scoreEmitter)="calculateScore($event)"></app-injury>
         <app-injury *ngFor="let injury of (victim$ | async)?.injuries" [injury]="injury"
