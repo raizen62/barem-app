@@ -13,6 +13,16 @@
     </div>
     
     <div *ngIf="(case$ | async)?.context && chief === true" class="injuries-container">
+
+        <div class="injuries-summary-container">
+            <div *ngFor="let victim of (case$ | async)?.victims" class="injuries-summary">
+                <div class="injuries-summary">
+                    <span class="mat-h4 victim-name">{{ victim.name }}</span>
+                    <mat-slide-toggle *ngFor="let injury of victim.injuries">{{ injury.nume }}</mat-slide-toggle>
+                </div>
+            </div>
+        </div>
+
         <app-injury *ngFor="let injury of (victim$ | async)?.injuries" [injury]="injury"
             (scoreEmitter)="calculateScore($event)"></app-injury>
     </div>
