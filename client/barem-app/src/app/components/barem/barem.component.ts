@@ -17,6 +17,7 @@ import { Injury } from 'src/app/types/injury';
 })
 export class BaremComponent implements OnInit {
 
+  chief = false;
   case$: Observable<Case>;
   victim$: Observable<Victim>;
   baremStart$: Observable<Injury[]>;
@@ -42,6 +43,14 @@ export class BaremComponent implements OnInit {
 
     this.victim$ = this.activatedRoute.params.pipe(
       switchMap(params => {
+        if( params.victimId === "chief" ) {
+          this.chief = true;
+          return this.victimService.getChief().pipe(
+            tap(victim => {
+              this.calculateTotalScore(victim.injuries);
+            })
+          );
+        }
         return this.victimService.getVictim(params.victimId).pipe(
           tap(victim => {
             this.calculateTotalScore(victim.injuries);
@@ -50,6 +59,16 @@ export class BaremComponent implements OnInit {
       }),
       shareReplay(1)
     );
+    // this.victim$ = this.activatedRoute.params.pipe(
+    //   switchMap(params => {
+    //     return this.victimService.getVictim(params.victimId).pipe(
+    //       tap(victim => {
+    //         this.calculateTotalScore(victim.injuries);
+    //       })
+    //     );
+    //   }),
+    //   shareReplay(1)
+    // );
 
     this.baremStart$ = this.injuryService.getDefaultInjuries().pipe(
       map(injuries => {
