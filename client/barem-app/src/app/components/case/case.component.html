@@ -1,6 +1,19 @@
 <div class="container">
     <h2 class="mat-headline"> {{ (case$ | async)?.context }}</h2>
 
+    <mat-card>
+        <div class="card-header">
+            <h3 class="card-title">{{ (chief$ | async)?.name }}</h3>
+    
+        </div>
+    
+        <mat-card-actions>
+            <button [routerLink]="'/case/' + (case$ | async)?.caseCode + '/barem/chief'" color="accent" mat-button>
+                Arbitrează
+            </button>
+        </mat-card-actions>
+    </mat-card>
+
     <mat-card *ngFor="let victim of (case$ | async)?.victims; let i = index">
         <div class="card-header">
             <div class="state-number">

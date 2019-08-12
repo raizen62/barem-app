@@ -1,13 +1,13 @@
 <div class="container">
     <div class="header-container">
-        <h2 class="mat-headline">{{ (victim$ | async)?.name + ', ' + (victim$ | async)?.age + ' ani' }}</h2>
-        <p class="victim-injuries mat-typography">
+        <h2 class="mat-headline">{{ (victim$ | async)?.name }}{{ (victim$ | async)?.age? ', ' +  (victim$ | async)?.age + ' ani' : '' }}</h2>
+        <p *ngIf="(case$ | async)?.context && chief === false" class="victim-injuries mat-typography">
             {{ (victim$ | async)?.injuries | injuriesToString }}
         </p>
 
         <p class="mat-caption text-center case-context">{{ (case$ | async)?.context }}</p>
 
-        <p class="victim-description mat-caption">
+        <p class="victim-description mat-caption text-center">
             {{ (victim$ | async)?.details }}
         </p>
     </div>

@@ -1,9 +1,11 @@
+import { VictimService } from './../../services/victim.service';
 import { switchMap, map } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { CaseService } from 'src/app/services/case.service';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Case } from 'src/app/types/case';
+import { Victim } from 'src/app/types/victim';
 
 @Component({
   selector: 'app-case',
@@ -13,10 +15,12 @@ import { Case } from 'src/app/types/case';
 export class CaseComponent implements OnInit {
 
   case$: Observable<Case>;
+  chief$: Observable<Victim>;
 
   constructor(
     private caseService: CaseService,
     private activatedRoute: ActivatedRoute,
+    private victimService: VictimService
   ) {}
 
   ngOnInit() {
@@ -25,5 +29,8 @@ export class CaseComponent implements OnInit {
         return this.caseService.getCaseByCode(params.id);
       })
     );
+
+    this.chief$ = this.victimService.getChief();
+    this.chief$.subscribe(res => console.log(res));
   }
 }

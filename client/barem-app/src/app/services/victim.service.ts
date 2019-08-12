@@ -14,6 +14,12 @@ export class VictimService {
     private http: HttpClient
   ) { }
 
+  getChief(): Observable<Victim> {
+    return (this.http.get('../../assets/data/chief-barem.json') as Observable<Victim>).pipe(
+      map(victim => victim[0])
+    );
+  }
+
   getVictim(victimId: string): Observable<Victim> {
     return this.http.get(`https://barem-dezastre.herokuapp.com/victims/${victimId}`) as Observable<Victim>;
   }
