@@ -5,4 +5,5 @@ export interface Victim {
   age?: number;
   context?: string[];
   injuries: Injury[];
+  details?: string;
 }
