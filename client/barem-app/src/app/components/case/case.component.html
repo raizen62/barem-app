@@ -1,7 +1,10 @@
 <div class="container">
     <h2 class="mat-headline"> {{ (case$ | async)?.context }}</h2>
 
-    <mat-card>
+    <app-casualty-card [casualty]="(chief$ | async)" [case]="(case$ | async)" [arbitrate]="true" [chief]="true"></app-casualty-card>
+    <app-casualty-card *ngFor="let casualty of (case$ | async)?.victims; let i = index" [casualty]="casualty" [case]="(case$ | async)" [arbitrate]="true"></app-casualty-card>
+
+    <!-- <mat-card>
         <div class="card-header">
             <h3 class="card-title">{{ (chief$ | async)?.name }}</h3>
     
@@ -38,6 +41,6 @@
             Arbitrează
           </button>
         </mat-card-actions>
-    </mat-card>
+    </mat-card> -->
 
 </div>

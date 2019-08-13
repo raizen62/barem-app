@@ -2,6 +2,7 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import "~normalize.css";
 @import 'assets/scss/_variables.scss';
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap');
 
 html,
 body{
@@ -36,4 +37,13 @@ app-injury {
 .mat-slide-toggle-content {
   font-size: 14px;
   color: rgba($color: #000, $alpha: 0.64);
+}
+
+.mat-expansion-panel-body {
+  box-sizing: border-box;
+  padding: 16px 32px !important;
+}
+
+.mat-expansion-panel:not([class*=mat-elevation-z]){
+  box-shadow: none;
 }
