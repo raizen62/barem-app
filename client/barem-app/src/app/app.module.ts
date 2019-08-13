@@ -19,7 +19,9 @@ import {
   MatListModule,
   MatTreeModule,
   MatSlideToggleModule,
-  MatExpansionModule
+  MatExpansionModule,
+  MatTabsModule,
+  MatCheckboxModule
 } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -82,6 +84,8 @@ import { CasualtyCardComponent } from './components/casualty-card/casualty-card.
     MatTreeModule,
     MatSlideToggleModule,
     MatExpansionModule,
+    MatTabsModule,
+    MatCheckboxModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
   ],
   providers: [

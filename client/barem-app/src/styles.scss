@@ -29,9 +29,35 @@ app-maneuver {
 app-injury {
   &:not(:last-child) {
     .injury-container{
-      margin-bottom: 24px;
+      margin-bottom: 32px;
     }
   }
+}
+
+.mat-checkbox-label {
+  font-size: 14px;
+  color: rgba($color: #000, $alpha: 0.64);
+  flex-grow: 1;
+}
+
+.mat-checkbox-layout{
+  width: 100%;
+}
+
+.mat-checkbox-layout .mat-checkbox-label{
+  line-height: 36px;
+}
+
+.mat-checkbox-frame{
+  border-color: rgba(0, 0, 0, .16);
+}
+
+.mat-tab-group.mat-primary .mat-ink-bar {
+  background-color: $primary;
+}
+
+.mat-checkbox-checked.mat-accent .mat-checkbox-background{
+  background-color: $primary;
 }
 
 .mat-slide-toggle-content {
@@ -39,11 +65,26 @@ app-injury {
   color: rgba($color: #000, $alpha: 0.64);
 }
 
-.mat-expansion-panel-body {
-  box-sizing: border-box;
-  padding: 16px 32px !important;
+app-casualty-card{
+  .mat-expansion-panel-body {
+    box-sizing: border-box;
+    padding: 16px 32px !important;
+  }
+
+  .mat-expansion-panel:not([class*=mat-elevation-z]) {
+    box-shadow: none;
+  }
 }
 
-.mat-expansion-panel:not([class*=mat-elevation-z]){
-  box-shadow: none;
+.mat-tab-labels{
+  display: flex;
+  justify-content: center;
+}
+
+.mat-raised-button.mat-accent{
+  background-color: $primary;
+}
+
+.mat-tab-label-active {
+  opacity: 1 !important;
 }
