@@ -5,7 +5,7 @@
   margin-bottom: 32px;
 }
 
-.victim-injuries{
+.victim-injuries-text{
     text-align: center;
     margin-bottom: 30px;
     font-weight: 500;
@@ -23,8 +23,12 @@
 
 .header-container{
   box-sizing: border-box;
-  padding: 0 30px;
-  margin-bottom: 30px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+
 }
 
 .score-container {
@@ -33,7 +37,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  // margin: 60px 0 15px;
 
   h5 {
     font-size: 1.3em;
@@ -61,17 +64,26 @@
 }
 
 .injuries-summary-container{
-    padding-left: 30px;
-    padding-right: 30px;
-    margin-bottom: 30px;
+  box-sizing: border-box;
+    padding: 30px;
 }
 
 .injuries-summary{
   display: flex;
   flex-direction: column;
-  margin-bottom: 8px;
+  margin-bottom: 24px;
+}
 
-  .victim-name{
-    margin-bottom: 4px;
+.casualty-name-container{
+  display: flex;
+  align-items: center;
+
+  mat-icon{
+    margin-right: 8px;
   }
+}
+
+.injuries-list-container{
+  box-sizing: border-box;
+  padding-left: 32px;
 }
