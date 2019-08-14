@@ -21,7 +21,8 @@ import {
   MatSlideToggleModule,
   MatExpansionModule,
   MatTabsModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatChipsModule
 } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -43,6 +44,7 @@ import { InjuriesToStringPipe } from './pipes/injuries-to-string.pipe';
 import { InjuryComponent } from './components/barem/injury/injury.component';
 import { ManeuverComponent } from './components/barem/injury/maneuver/maneuver.component';
 import { CasualtyCardComponent } from './components/casualty-card/casualty-card.component';
+import { TriageComponent } from './components/triage/triage.component';
 
 
 @NgModule({
@@ -62,7 +64,8 @@ import { CasualtyCardComponent } from './components/casualty-card/casualty-card.
     InjuriesToStringPipe,
     InjuryComponent,
     ManeuverComponent,
-    CasualtyCardComponent
+    CasualtyCardComponent,
+    TriageComponent
   ],
   imports: [
     BrowserModule,
@@ -86,6 +89,7 @@ import { CasualtyCardComponent } from './components/casualty-card/casualty-card.
     MatExpansionModule,
     MatTabsModule,
     MatCheckboxModule,
+    MatChipsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
   ],
   providers: [

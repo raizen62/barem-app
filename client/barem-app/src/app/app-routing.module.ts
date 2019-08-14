@@ -1,3 +1,4 @@
+import { TriageComponent } from './components/triage/triage.component';
 import { AccessCaseComponent } from './components/access-case/access-case.component';
 import { CaseComponent } from './components/case/case.component';
 import { CreateCaseComponent } from './components/create-case/create-case.component';
@@ -12,6 +13,7 @@ import { BaremComponent } from './components/barem/barem.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
+  {path: 'triage', component: TriageComponent},
   {path: 'access-case', component: AccessCaseComponent},
   {path: 'case/:id', component: CaseComponent},
   {path: 'case/:id/barem/:victimId', component: BaremComponent},
