@@ -7,5 +7,6 @@ export interface TriageCasualty {
     insufflations?: boolean,
     TRC?: number,
     mentalStatus?: boolean,
-    tag?: string
+    tag?: string,
+    injury?: string
 }
