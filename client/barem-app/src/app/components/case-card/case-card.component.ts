@@ -18,7 +18,6 @@ export class CaseCardComponent implements OnInit {
 
   deleteCase(casecode) {
     this.caseService.deleteCase(casecode).subscribe(data => {
-      console.log(data.message);
       this.deleted.emit(casecode);
     });
   }
