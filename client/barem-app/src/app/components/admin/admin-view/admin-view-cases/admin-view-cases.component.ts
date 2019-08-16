@@ -20,8 +20,7 @@ export class AdminViewCasesComponent implements OnInit {
   getCases() {
     this.caseService.getCases()
       .subscribe(data => {
-        this.cases$ = data
-        console.log(this.cases$);
+        this.cases$ = data;
       });
   }
 

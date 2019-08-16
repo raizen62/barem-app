@@ -15,7 +15,6 @@ export class AdminViewInjuriesComponent implements OnInit {
   ngOnInit() {
     this.injuryService.getInjuries().subscribe(data => {
       this.injuries$ = data;
-      console.log(this.injuries$);
     });
   }
 
