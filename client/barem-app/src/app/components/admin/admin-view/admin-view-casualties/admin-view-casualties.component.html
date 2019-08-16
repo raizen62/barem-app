@@ -1,0 +1,5 @@
+<div *ngIf="casualties$?.length" class="card-list">
+  <app-casualty-card *ngFor="let casualty of casualties$" [arbitrate]="false" [casualty]="casualty"></app-casualty-card>
+</div>
+
+<p *ngIf="!casualties$?.length">Nu exista victime</p>

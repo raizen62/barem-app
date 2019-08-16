@@ -1,0 +1,5 @@
+<div *ngIf="cases$?.length" class="card-list">
+  <app-case-card (deleted)="deleteCase($event)" *ngFor="let case of cases$" [case]="case"></app-case-card>
+</div>
+
+<p *ngIf="!cases$?.length">Nu exista cazuri</p>

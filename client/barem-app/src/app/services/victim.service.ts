@@ -24,6 +24,10 @@ export class VictimService {
     return this.http.get(`https://barem-dezastre.herokuapp.com/victims/${victimId}`) as Observable<Victim>;
   }
 
+  getCasualties() {
+    return this.http.get('https://barem-dezastre.herokuapp.com/victims/');
+  }
+
   getVictims(filters: VictimFilters): Observable<Victim[]> {
     // return (this.http.get('../../assets/data/victims.json') as Observable<Victim[]>).pipe(
     return (this.http.get('https://barem-dezastre.herokuapp.com/victims') as Observable<Victim[]>).pipe(

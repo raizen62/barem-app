@@ -46,6 +46,12 @@ import { ManeuverComponent } from './components/barem/injury/maneuver/maneuver.c
 import { CasualtyCardComponent } from './components/casualty-card/casualty-card.component';
 import { TriageComponent } from './components/triage/triage.component';
 import { TriageV2Component } from './components/triage-v2/triage-v2.component';
+import {AdminViewComponent} from './components/admin/admin-view/admin-view.component';
+import {AdminViewCasesComponent} from './components/admin/admin-view/admin-view-cases/admin-view-cases.component';
+import {AdminViewCasualtiesComponent} from './components/admin/admin-view/admin-view-casualties/admin-view-casualties.component';
+import {AdminViewInjuriesComponent} from './components/admin/admin-view/admin-view-injuries/admin-view-injuries.component';
+import {CaseCardComponent} from './components/case-card/case-card.component';
+import {InjuriesCardComponent} from './components/injuries-card/injuries-card.component';
 
 
 @NgModule({
@@ -67,7 +73,13 @@ import { TriageV2Component } from './components/triage-v2/triage-v2.component';
     ManeuverComponent,
     CasualtyCardComponent,
     TriageComponent,
-    TriageV2Component
+    TriageV2Component,
+    AdminViewComponent,
+    AdminViewCasesComponent,
+    AdminViewCasualtiesComponent,
+    AdminViewInjuriesComponent,
+    CaseCardComponent,
+    InjuriesCardComponent
   ],
   imports: [
     BrowserModule,
