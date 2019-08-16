@@ -45,6 +45,7 @@ import { InjuryComponent } from './components/barem/injury/injury.component';
 import { ManeuverComponent } from './components/barem/injury/maneuver/maneuver.component';
 import { CasualtyCardComponent } from './components/casualty-card/casualty-card.component';
 import { TriageComponent } from './components/triage/triage.component';
+import { TriageV2Component } from './components/triage-v2/triage-v2.component';
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { TriageComponent } from './components/triage/triage.component';
     InjuryComponent,
     ManeuverComponent,
     CasualtyCardComponent,
-    TriageComponent
+    TriageComponent,
+    TriageV2Component
   ],
   imports: [
     BrowserModule,

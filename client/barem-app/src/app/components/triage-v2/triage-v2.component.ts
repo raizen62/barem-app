@@ -1,24 +1,27 @@
-import { startWith, map, shareReplay } from 'rxjs/operators';
-import { TriageCasualty } from './../../types/triage-casualty.d';
 import { Component, OnInit } from '@angular/core';
+import { TriageCasualty } from 'src/app/types/triage-casualty';
 import { Subject, Observable } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material';
 
 declare var Chance: any;
 
 @Component({
-  selector: 'app-triage',
-  templateUrl: './triage.component.html',
-  styleUrls: ['./triage.component.scss']
+  selector: 'app-triage-v2',
+  templateUrl: './triage-v2.component.html',
+  styleUrls: ['./triage-v2.component.scss']
 })
-export class TriageComponent implements OnInit {
+export class TriageV2Component implements OnInit {
 
   triageCasualty: TriageCasualty = {
+    name: null,
     age: null,
     breathing: null,
     openAirway: null,
     insufflations: null,
     TRC: null,
-    mentalStatus: null
+    mentalStatus: null,
+    injury: null
   };
 
   resultSubject$: Subject<string> = new Subject<null>();
@@ -30,15 +33,20 @@ export class TriageComponent implements OnInit {
   };
   pristine = true;
 
+  openAirway = false;
+  insufflations = false;
+
   chance = new Chance();
 
-  constructor() { }
+  constructor(
+    private _snackBar: MatSnackBar
+  ) { }
 
   ngOnInit() {
     this.triageCasualty = this.generateTriageCasualty();
     this.result$ = this.resultSubject$.pipe(
       map(tag => {
-        if(tag == null) {
+        if (tag == null) {
           return null;
         }
 
@@ -48,7 +56,7 @@ export class TriageComponent implements OnInit {
           }
           return true;
         }
-        if(this.pristine == true) {
+        if (this.pristine == true) {
           this.score.wrong++;
         }
         this.pristine = false;
@@ -57,7 +65,7 @@ export class TriageComponent implements OnInit {
       shareReplay(1)
     )
 
-    
+
     // for(let i = 0; i < 20; i++){
     //   console.log(this.chance.weighted([0, this.chance.integer({ min: 0, max: 50})], [1, 1.5]));
     // }
@@ -67,15 +75,19 @@ export class TriageComponent implements OnInit {
     this.triageCasualty = this.generateTriageCasualty();
     this.resultSubject$.next(null);
     this.pristine = true;
+    this.openAirway = false;
+    this.insufflations = false;
+    this._snackBar.dismiss();
   }
 
   generateTriageCasualty(): TriageCasualty {
 
     let triageCasualty: TriageCasualty = {};
-    triageCasualty.age = this.getRandomArbitrary(1,45);
+    triageCasualty.age = this.getRandomArbitrary(1, 45);
 
     // let breathing = this.getRandomArbitrary(0, 45);
     // triageCasualty.breathing = breathing > 15? breathing : 0;
+    triageCasualty.name = this.chance.name({ nationality: 'en' });
     triageCasualty.breathing = this.chance.weighted([0, this.chance.integer({ min: 0, max: 50 })], [1, 1.5]);
 
     if (triageCasualty.breathing === 0) {
@@ -86,7 +98,7 @@ export class TriageComponent implements OnInit {
       } else {
         triageCasualty.openAirway = false;
 
-        if (triageCasualty.age < this.childAgeThreshold){
+        if (triageCasualty.age < this.childAgeThreshold) {
           let rand = this.getRandomArbitrary(0, 1);
           if (rand) {
             triageCasualty.insufflations = true;
@@ -118,8 +130,10 @@ export class TriageComponent implements OnInit {
       rand = this.getRandomArbitrary(0, 1);
       if (rand) {
         triageCasualty.canWalk = true;
+        triageCasualty.injury = this.chance.weighted(['Nu ma doare nimic', 'Fractura inchisa brat', 'Hemoragie', 'Lovitura la cap', 'Luxatie', 'Entorsa'], [5,1, 1, 1, 1, 1]);
       } else {
         triageCasualty.canWalk = false;
+        triageCasualty.injury = this.chance.weighted(['Fractura inchisa picior', 'Hemoragie', 'Hemoragie interna', 'Lovitura la cap', 'Luxatie', 'Entorsa'], [2, 2, 1, 1, 1, 1]);
       }
     }
 
@@ -179,6 +193,21 @@ export class TriageComponent implements OnInit {
 
   verify(tag: string) {
     this.resultSubject$.next(tag);
+  }
+
+  result(result){
+    this._snackBar.open(`${result}`, '', { 
+      verticalPosition: 'top',
+      duration: 3000
+    });
+  }
+
+  showAirway() {
+    this.openAirway = true;
+  }
+
+  showInsufflations() {
+    this.insufflations = true;
   }
 
 }
