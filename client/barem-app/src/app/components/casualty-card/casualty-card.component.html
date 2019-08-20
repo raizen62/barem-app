@@ -21,7 +21,7 @@
     <span>{{ (casualty)?.details }}</span>
 </mat-expansion-panel>
 
-<div class="footer">
+<div *ngIf="arbitrate" class="footer">
     <button [routerLink]="'/case/' + case?.caseCode + '/barem/' + ((casualty)?._id? casualty._id : 'chief')" mat-flat-button>
         Arbitrează
     </button>

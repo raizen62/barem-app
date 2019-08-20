@@ -24,7 +24,11 @@ export class CaseService {
     return of(this.case);
   }
 
-  getCaseByCode(caseCode: string): Observable<Case>{
+  getCases(): Observable<Case> {
+    return this.http.get('https://barem-dezastre.herokuapp.com/cases/');
+  }
+
+  getCaseByCode(caseCode: string): Observable<Case> {
     return this.http.get(`https://barem-dezastre.herokuapp.com/cases/${caseCode}`).pipe(map(cs => cs[0]));
   }
 
@@ -40,6 +44,10 @@ export class CaseService {
     };
 
     return of(this.case);
+  }
+
+  deleteCase(casecode) {
+    return this.http.delete(`https://barem-dezastre.herokuapp.com/cases/${casecode}`);
   }
 
 }

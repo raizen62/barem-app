@@ -1,0 +1,11 @@
+app-case-card {
+  margin-right: 10px;
+  min-width: 300px;
+}
+
+.card-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 10px;
+}

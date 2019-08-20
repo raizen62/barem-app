@@ -10,6 +10,7 @@ import {AdminCreateCaseComponent} from './components/admin/admin-create-case/adm
 import {AdminCreateVictimComponent} from './components/admin/admin-create-victim/admin-create-victim.component';
 import { VictimsListComponent } from './components/victims-list/victims-list.component';
 import { BaremComponent } from './components/barem/barem.component';
+import {AdminViewComponent} from "./components/admin/admin-view/admin-view.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -21,7 +22,8 @@ const routes: Routes = [
   {path: 'create-case/victims-list', component: VictimsListComponent},
   {path: 'admin', component: AdminComponent},
   {path: 'admin/create-case', component: AdminCreateCaseComponent},
-  {path: 'admin/create-victim', component: AdminCreateVictimComponent}
+  {path: 'admin/create-victim', component: AdminCreateVictimComponent},
+  {path: 'admin/view', component: AdminViewComponent}
 ];
 
 @NgModule({
