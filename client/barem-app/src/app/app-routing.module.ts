@@ -1,4 +1,3 @@
-import { TriageV2Component } from './components/triage-v2/triage-v2.component';
 import { TriageComponent } from './components/triage/triage.component';
 import { AccessCaseComponent } from './components/access-case/access-case.component';
 import { CaseComponent } from './components/case/case.component';
@@ -15,7 +14,6 @@ import { BaremComponent } from './components/barem/barem.component';
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'triage', component: TriageComponent},
-  {path: 'triage-v2', component: TriageV2Component},
   {path: 'access-case', component: AccessCaseComponent},
   {path: 'case/:id', component: CaseComponent},
   {path: 'case/:id/barem/:victimId', component: BaremComponent},

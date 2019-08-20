@@ -6,57 +6,26 @@
         <span class="wrong">{{ score.wrong }}</span>
     </div>
 
-    <ul class="triage-casualty-resume-list">
-        <li>
-            <span class="label">Varsta:</span>
-            <mat-chip-list>
-                <mat-chip disableRipple>{{ triageCasualty?.age }} ani</mat-chip>
-            </mat-chip-list>
-            <!-- <span class="value">{{ triageCasualty?.age }} ani</span> -->
-        </li>
-        <li>
-            <span class="label">Poate merge:</span>
-            <mat-chip-list>
-                <mat-chip disableRipple>{{ triageCasualty?.canWalk? 'DA' : 'NU' }}</mat-chip>
-            </mat-chip-list>
-            <!-- <span class="value">{{ triageCasualty?.canWalk? 'DA' : 'NU' }}</span> -->
-        </li>
-        <li>
-            <span class="label">Respiratie:</span>
-            <mat-chip-list>
-                <mat-chip disableRipple>{{ triageCasualty?.breathing? triageCasualty?.breathing + '/min' : 'NU' }}</mat-chip>
-            </mat-chip-list>
-            <!-- <span class="value">{{ triageCasualty?.breathing? triageCasualty?.breathing + '/min' : 'NU' }}</span> -->
-        </li>
-        <li *ngIf="triageCasualty?.breathing == 0">
-            <span class="label">Deschidere cai aeriene:</span>
-            <mat-chip-list>
-                <mat-chip disableRipple>{{ triageCasualty?.openAirway? 'Respira' : 'NU respira' }}</mat-chip>
-            </mat-chip-list>
-            <!-- <span class="value">{{ triageCasualty?.openAirway? 'Respira' : 'NU respira' }}</span> -->
-        </li>
-        <li *ngIf="triageCasualty?.age < childAgeThreshold && triageCasualty?.breathing == 0">
-            <span class="label">5 insuflatii:</span>
-            <mat-chip-list>
-                <mat-chip disableRipple>{{ triageCasualty?.insufflations? 'Respira' : 'NU respira' }}</mat-chip>
-            </mat-chip-list>
-            <!-- <span class="value">{{ triageCasualty?.insufflations? 'Respira' : 'NU respira' }}</span> -->
-        </li>
-        <li *ngIf="triageCasualty?.breathing > 0">
-            <span class="label">TRC:</span>
-            <mat-chip-list>
-                <mat-chip disableRipple>{{ triageCasualty?.TRC }}</mat-chip>
-            </mat-chip-list>
-            <!-- <span class="value">{{ triageCasualty?.TRC }}</span> -->
-        </li>
-        <li *ngIf="triageCasualty?.breathing > 0">
-            <span class="label">Status mental:</span>
-            <mat-chip-list>
-                <mat-chip disableRipple>{{ triageCasualty?.mentalStatus? 'Executa comenzi simple' : 'NU executa comenzi simple' }}</mat-chip>
-            </mat-chip-list>
-            <!-- <span class="value">{{ triageCasualty?.mentalStatus? 'Executa comenzi simple' : 'NU executa comenzi simple' }}</span> -->
-        </li>
-    </ul>
+    <div class="options">
+        <button mat-raised-button class="option"
+            (click)="snackValue(triageCasualty?.breathing? triageCasualty?.name +', ' + triageCasualty?.age + ' ani' : triageCasualty?.age + ' ani')">Initierea
+            contactului verbal</button>
+        <button mat-raised-button class="option"
+            (click)="snackValue(triageCasualty?.breathing? (triageCasualty?.canWalk? 'Da, pot sa merg' : 'Nu, nu pot sa merg') : '-')">Poti
+            sa mergi?</button>
+        <button mat-raised-button class="option"
+            (click)="snackValue(triageCasualty?.breathing? triageCasualty?.breathing + '/min' : 'Nu respira'); showAirway()">Respiratie</button>
+        <button mat-raised-button class="option" *ngIf="!triageCasualty?.breathing && openAirway"
+            (click)="snackValue(triageCasualty?.openAirway? 'Respira' : 'Nu respira'); showInsufflations()">Deschidere cai
+            aeriene</button>
+        <button mat-raised-button class="option"
+            *ngIf="!triageCasualty?.breathing && insufflations && triageCasualty?.age < childAgeThreshold && !triageCasualty?.openAirway"
+            (click)="snackValue(triageCasualty?.insufflations? 'Respira' : 'Nu respira')">Insuflatii</button>
+        <button mat-raised-button class="option" (click)="snackValue(triageCasualty?.TRC)">TRC</button>
+        <button mat-raised-button class="option"
+            (click)="snackValue(triageCasualty?.mentalStatus? 'Executa comenzi simple' : 'NU executa comenzi simple')">Status
+            mental</button>
+    </div>
 </div>
 
 <div class="actions">
@@ -66,8 +35,9 @@
         <button mat-raised-button color="accent" (click)="verify('red')">Rosu</button>
         <button mat-raised-button color="accent" (click)="verify('black')">Negru</button>
     </div>
-    
-    <div class="result" [ngClass]="{'correct': (result$ | async) == true, 'wrong': (result$ | async) == false }" *ngIf="(result$ | async) != null">{{ (result$ | async) == true? 'Corect' : 'Gresit' }}</div>
-    
+
+    <div class="result" [ngClass]="{'correct': result == true, 'wrong': result == false }"
+        *ngIf="result != null">{{ result == true? 'Corect' : 'Gresit' }}</div>
+
     <button mat-raised-button color="accent" (click)="generate()">Genereaza</button>
 </div>
