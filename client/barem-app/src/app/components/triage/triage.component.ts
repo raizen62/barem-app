@@ -99,7 +99,7 @@ export class TriageComponent implements OnInit {
 
     triageCasualty.tag = this.calculateTag(triageCasualty);
 
-    console.log(JSON.parse(JSON.stringify(triageCasualty)));
+    // console.log(JSON.parse(JSON.stringify(triageCasualty)));
 
     return triageCasualty;
   }
@@ -171,7 +171,6 @@ export class TriageComponent implements OnInit {
   }
 
   showInsufflations() {
-    console.log("here");
     this.insufflations = true;
   }
 
