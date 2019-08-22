@@ -1,3 +1,4 @@
+import { CasualtyService } from './services/casualty.service';
 import { InjuryService } from './services/injury.service';
 import { ManeuverService } from './services/maneuver.service';
 import { VictimService } from './services/victim.service';
@@ -51,6 +52,7 @@ import {AdminViewCasualtiesComponent} from './components/admin/admin-view/admin-
 import {AdminViewInjuriesComponent} from './components/admin/admin-view/admin-view-injuries/admin-view-injuries.component';
 import {CaseCardComponent} from './components/case-card/case-card.component';
 import {InjuriesCardComponent} from './components/injuries-card/injuries-card.component';
+import { CasesComponent } from './components/cases/cases.component';
 
 
 @NgModule({
@@ -77,7 +79,8 @@ import {InjuriesCardComponent} from './components/injuries-card/injuries-card.co
     AdminViewCasualtiesComponent,
     AdminViewInjuriesComponent,
     CaseCardComponent,
-    InjuriesCardComponent
+    InjuriesCardComponent,
+    CasesComponent
   ],
   imports: [
     BrowserModule,
@@ -106,7 +109,7 @@ import {InjuriesCardComponent} from './components/injuries-card/injuries-card.co
   ],
   providers: [
     CaseService,
-    VictimService,
+    CasualtyService,
     InjuryService,
     ManeuverService
   ],

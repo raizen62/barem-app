@@ -1,5 +1,5 @@
+import { Casualty } from './../../types/casualty.d';
 import { Case } from './../../types/case.d';
-import { Victim } from 'src/app/types/victim';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
@@ -9,7 +9,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class CasualtyCardComponent implements OnInit {
 
-  @Input() casualty: Victim;
+  @Input() casualty: Casualty;
   @Input() case: Case;
   @Input() arbitrate: boolean;
   @Input() chief: boolean = false;

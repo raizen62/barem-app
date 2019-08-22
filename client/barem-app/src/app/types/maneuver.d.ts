@@ -1,5 +1,8 @@
 export interface Maneuver {
-  descriere: string;
-  punctajMaxim: number;
-  punctajPartial?: number;
+  _id?: string;
+  description: string;
+  score: {
+    average?: number;
+    maximum: number;
+  }
 }
