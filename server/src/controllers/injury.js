@@ -5,14 +5,14 @@ exports.findAll = (req, res) => {
         .then(injuries => {
             res.send(injuries);
         }).catch(err => {
-            res.status(500).send({
-                message: err.message || "Something wrong while retrieving the injuries."
-            });
+        res.status(500).send({
+            message: err.message || "Something wrong while retrieving the injuries."
         });
+    });
 };
 
 exports.findOne = (req, res) => {
-    Injury.find({ name: req.params.name })
+    Injury.find({name: req.params.name})
         .then(injury => {
             if (!injury) {
                 return res.status(400).send({
@@ -49,14 +49,14 @@ exports.create = (req, res) => {
 }
 
 exports.delete = (req, res) => {
-    Injury.findOneAndRemove({ id: req.params.id })
+    Injury.findOneAndRemove({id: req.params.id})
         .then(injury => {
             if (!injury) {
                 return res.status(404).send({
                     message: "Nu a fost gasit nici o leziune cu acest id"
                 })
             }
-            res.send({ message: "Leziunea a fost stearsa cu success!" })
+            res.send({message: "Leziunea a fost stearsa cu success!"})
         })
         .catch(err => {
             if (err.kind === "ObjectId" || err.name === "NotFound") {

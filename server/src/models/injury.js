@@ -8,7 +8,7 @@ const InjurySchema = mongoose.Schema({
             maximum: Number,
             average: Number
         }
-  }],
+    }],
     location: [String]
 });
 
