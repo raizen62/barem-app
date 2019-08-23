@@ -2,6 +2,7 @@ import { startWith, map, shareReplay } from 'rxjs/operators';
 import { TriageCasualty } from './../../types/triage-casualty.d';
 import { Component, OnInit } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
+import { MatSnackBar } from '@angular/material';
 
 declare var Chance: any;
 
@@ -12,74 +13,46 @@ declare var Chance: any;
 })
 export class TriageComponent implements OnInit {
 
-  triageCasualty: TriageCasualty = {
-    age: null,
-    breathing: null,
-    openAirway: null,
-    insufflations: null,
-    TRC: null,
-    mentalStatus: null
-  };
+  triageCasualty: TriageCasualty;
 
-  resultSubject$: Subject<string> = new Subject<null>();
-  result$: Observable<boolean>;
-  childAgeThreshold = 12;
+  childAgeThreshold = 13;
   score = {
     correct: 0,
     wrong: 0
   };
+  openAirway = false;
+  insufflations = false;
   pristine = true;
+  result: boolean = null;
 
   chance = new Chance();
 
-  constructor() { }
+  constructor(
+    private _snackBar: MatSnackBar
+  ) { }
 
   ngOnInit() {
     this.triageCasualty = this.generateTriageCasualty();
-    this.result$ = this.resultSubject$.pipe(
-      map(tag => {
-        if(tag == null) {
-          return null;
-        }
-
-        if (this.triageCasualty.tag == tag) {
-          if (this.pristine == true) {
-            this.score.correct++;
-          }
-          return true;
-        }
-        if(this.pristine == true) {
-          this.score.wrong++;
-        }
-        this.pristine = false;
-        return false;
-      }),
-      shareReplay(1)
-    )
-
-    
-    // for(let i = 0; i < 20; i++){
-    //   console.log(this.chance.weighted([0, this.chance.integer({ min: 0, max: 50})], [1, 1.5]));
-    // }
   }
 
   generate(): void {
     this.triageCasualty = this.generateTriageCasualty();
-    this.resultSubject$.next(null);
     this.pristine = true;
+    this.result = null;
+    this.openAirway = false;
+    this.insufflations = false;
   }
 
   generateTriageCasualty(): TriageCasualty {
 
     let triageCasualty: TriageCasualty = {};
-    triageCasualty.age = this.getRandomArbitrary(1,45);
 
-    // let breathing = this.getRandomArbitrary(0, 45);
-    // triageCasualty.breathing = breathing > 15? breathing : 0;
+    triageCasualty.name = this.chance.name({ nationality: 'en' });
+    triageCasualty.age = this.chance.weighted([this.chance.integer({ min: 2, max: 12 }),this.chance.integer({ min: 12, max: 70 })], [0.33, 1]);
     triageCasualty.breathing = this.chance.weighted([0, this.chance.integer({ min: 0, max: 50 })], [1, 1.5]);
 
     if (triageCasualty.breathing === 0) {
-      let rand = this.getRandomArbitrary(0, 1);
+      let rand = this.chance.bool();
       if (rand) {
         triageCasualty.openAirway = true;
         triageCasualty.insufflations = true;
@@ -87,7 +60,7 @@ export class TriageComponent implements OnInit {
         triageCasualty.openAirway = false;
 
         if (triageCasualty.age < this.childAgeThreshold){
-          let rand = this.getRandomArbitrary(0, 1);
+          let rand = this.chance.bool();
           if (rand) {
             triageCasualty.insufflations = true;
           } else {
@@ -105,36 +78,30 @@ export class TriageComponent implements OnInit {
       triageCasualty.openAirway = true;
       triageCasualty.insufflations = true;
 
-      let rand = this.getRandomArbitrary(0, 3, false);
-      triageCasualty.TRC = parseFloat(rand);
+      triageCasualty.TRC = this.chance.floating({ min: 0, max: 3, fixed: 2 });
 
-      rand = this.getRandomArbitrary(0, 1);
+      let rand = this.chance.bool();
       if (rand) {
         triageCasualty.mentalStatus = true;
+
+        let rand = this.chance.bool();
+        if (rand) {
+          triageCasualty.canWalk = true;
+        } else {
+          triageCasualty.canWalk = false;
+        }
       } else {
         triageCasualty.mentalStatus = false;
-      }
-
-      rand = this.getRandomArbitrary(0, 1);
-      if (rand) {
-        triageCasualty.canWalk = true;
-      } else {
         triageCasualty.canWalk = false;
       }
+
     }
 
     triageCasualty.tag = this.calculateTag(triageCasualty);
 
-    console.log(JSON.parse(JSON.stringify(triageCasualty)));
+    // console.log(JSON.parse(JSON.stringify(triageCasualty)));
 
     return triageCasualty;
-  }
-
-  getRandomArbitrary(min, max, round = true) {
-    if (round) {
-      return Math.round(Math.random() * (max - min) + min);
-    }
-    return (Math.random() * (max - min) + min).toFixed(2);
   }
 
   calculateTag(triageCasualty: TriageCasualty): string {
@@ -178,7 +145,33 @@ export class TriageComponent implements OnInit {
   }
 
   verify(tag: string) {
-    this.resultSubject$.next(tag);
+    if (this.triageCasualty.tag == tag) {
+      this.result = true;
+      if (this.pristine == true) {
+        this.score.correct++;
+      }
+    } else {
+      this.result = false;
+      if (this.pristine == true) {
+        this.score.wrong++;
+      }
+    }
+    this.pristine = false;
+  }
+
+  snackValue(value) {
+    this._snackBar.open(`${value}`, '', {
+      verticalPosition: 'top',
+      duration: 3000
+    });
+  }
+
+  showAirway() {
+    this.openAirway = true;
+  }
+
+  showInsufflations() {
+    this.insufflations = true;
   }
 
 }
