@@ -10,6 +10,8 @@ export class CaseCardComponent implements OnInit {
   @Input() case;
   @Output() deleted = new EventEmitter<boolean>();
 
+  panelOpenState = false;
+
   constructor(private caseService: CaseService) {
   }
 
@@ -20,5 +22,9 @@ export class CaseCardComponent implements OnInit {
     this.caseService.deleteCase(casecode).subscribe(data => {
       this.deleted.emit(casecode);
     });
+  }
+
+  showContext(): void {
+    this.panelOpenState = !this.panelOpenState;
   }
 }

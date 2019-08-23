@@ -1,0 +1,3 @@
+<div class="cases-list">
+    <app-case-card (deleted)="deleteCase($event)" *ngFor="let case of cases$ | async" [case]="case"></app-case-card>
+</div>

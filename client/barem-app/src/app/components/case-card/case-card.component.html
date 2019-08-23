@@ -1,4 +1,4 @@
-<div class="card">
+<!-- <div class="card">
   <p>Case code: {{case.caseCode | uppercase}}</p>
   <p>{{case.context}}</p>
   <p>{{case._id}}</p>
@@ -8,6 +8,36 @@
       <mat-icon>
         delete
       </mat-icon>
+    </button>
+  </div>
+</div> -->
+
+
+<div class="card">
+  <div class="card-container" [routerLink]="['/case/' + case.caseCode]" matRipple>
+    <div class="card-header">
+      <section class="card-section">
+        <label class="card-label">Cazul:</label>
+        <mat-chip-list class="case-code" disableRipple>
+          <mat-chip>{{ case.caseCode }}</mat-chip>
+        </mat-chip-list>
+        <div class="number-of-casualties-container">
+          <mat-icon aria-hidden="false">face</mat-icon>
+          <span class="number-of-casualties">
+            {{ case.victims.length }}
+          </span>
+        </div>
+      </section>
+    </div>
+    
+    <mat-expansion-panel [(expanded)]="panelOpenState">
+      <span>{{ case.context }}</span>
+    </mat-expansion-panel>
+  </div>
+
+  <div class="actions">
+    <button mat-icon-button (click)="showContext()" [ngClass]="{'panelOpen': panelOpenState}">
+      <mat-icon>description</mat-icon>
     </button>
   </div>
 </div>

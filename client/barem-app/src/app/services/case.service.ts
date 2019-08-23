@@ -24,8 +24,8 @@ export class CaseService {
     return of(this.case);
   }
 
-  getCases(): Observable<Case> {
-    return this.http.get('https://barem-dezastre.herokuapp.com/cases/');
+  getCases(): Observable<Case[]> {
+    return this.http.get('https://barem-dezastre.herokuapp.com/cases/') as Observable<Case[]>;
   }
 
   getCaseByCode(caseCode: string): Observable<Case> {

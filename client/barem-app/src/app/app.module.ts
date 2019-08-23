@@ -6,6 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatRippleModule } from '@angular/material/core';
 import {
   MatButtonModule,
   MatSelectModule,
@@ -22,7 +23,7 @@ import {
   MatExpansionModule,
   MatTabsModule,
   MatCheckboxModule,
-  MatChipsModule
+  MatChipsModule,
 } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -51,6 +52,7 @@ import {AdminViewCasualtiesComponent} from './components/admin/admin-view/admin-
 import {AdminViewInjuriesComponent} from './components/admin/admin-view/admin-view-injuries/admin-view-injuries.component';
 import {CaseCardComponent} from './components/case-card/case-card.component';
 import {InjuriesCardComponent} from './components/injuries-card/injuries-card.component';
+import { CasesComponent } from './components/cases/cases.component';
 
 
 @NgModule({
@@ -77,7 +79,8 @@ import {InjuriesCardComponent} from './components/injuries-card/injuries-card.co
     AdminViewCasualtiesComponent,
     AdminViewInjuriesComponent,
     CaseCardComponent,
-    InjuriesCardComponent
+    InjuriesCardComponent,
+    CasesComponent
   ],
   imports: [
     BrowserModule,
@@ -102,6 +105,7 @@ import {InjuriesCardComponent} from './components/injuries-card/injuries-card.co
     MatTabsModule,
     MatCheckboxModule,
     MatChipsModule,
+    MatRippleModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
   ],
   providers: [

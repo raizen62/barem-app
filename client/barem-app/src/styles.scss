@@ -3,6 +3,7 @@
 @import "~normalize.css";
 @import 'assets/scss/_variables.scss';
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap');
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
 html,
 body{
@@ -65,14 +66,24 @@ app-injury {
   color: rgba($color: #000, $alpha: 0.64);
 }
 
-app-casualty-card{
+app-casualty-card,
+app-case-card {
+  .mat-expansion-panel:not([class*=mat-elevation-z]) {
+    box-shadow: none;
+  }
+}
+
+app-case-card {
+  .mat-expansion-panel-body {
+    box-sizing: border-box;
+    padding: 0 0 16px 24px !important;
+  }
+}
+
+app-casualty-card {
   .mat-expansion-panel-body {
     box-sizing: border-box;
     padding: 16px 32px !important;
-  }
-
-  .mat-expansion-panel:not([class*=mat-elevation-z]) {
-    box-shadow: none;
   }
 }
 
