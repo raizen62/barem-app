@@ -1,4 +1,4 @@
-const Victim = require("../models/victim");
+const Casualty = require("../models/casualty");
 
 exports.create = (req, res) => {
   if (!req.body) {
@@ -7,7 +7,7 @@ exports.create = (req, res) => {
     });
   }
 
-  const victima = new Victim({
+    const casualty = new Casualty({
     name: req.body.name,
     context: req.body.context,
     age: req.body.age,
@@ -15,7 +15,7 @@ exports.create = (req, res) => {
     injuries: req.body.injuries
   });
 
-  victima
+    casualty
     .save()
     .then(data => {
       res.send(data);
@@ -28,9 +28,9 @@ exports.create = (req, res) => {
 };
 
 exports.deleteOne = (req, res) => {
-  Victim.findOneAndRemove({ id: req.params.id })
-    .then(victim => {
-      if (!victim) {
+    Casualty.findOneAndRemove({id: req.params.id})
+        .then(casualty => {
+            if (!casualty) {
         return res.status(404).send({
           message: "Nu a fost gasit nici o victima cu acest cod"
         });
@@ -50,15 +50,15 @@ exports.deleteOne = (req, res) => {
 };
 
 exports.findAllByContext = (req, res) => {
-  Victim.find({ context: req.params.context })
+    Casualty.find({context: req.params.context})
     .populate("injuries")
-    .then(victima => {
-      if (!victima) {
+        .then(casualty => {
+            if (!casualty) {
         return res.status(400).send({
           message: "Nu a fost gasit nici un victima cu acest cod"
         });
       }
-      res.send(victima);
+            res.send(casualty);
     })
     .catch(err => {
       if (err.kind === "ObjectId") {
@@ -73,32 +73,32 @@ exports.findAllByContext = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-  Victim.find()
+    Casualty.find()
     .populate("injuries")
-    .then(victims => {
-      res.send(victims);
+        .then(casualties => {
+            res.send(casualties);
     })
     .catch(err => {
       res.status(500).send({
-        message: err.message || "Something wrong while retrieving the victims."
+          message: err.message || "Something wrong while retrieving the casualties."
       });
     });
 };
 
 exports.findOne = (req, res) => {
-    Victim.findById(req.params.id)
+    Casualty.findById(req.params.id)
         .populate('injuries')
-        .then(victim => {
-            if (!victim) {
+        .then(casualty => {
+            if (!casualty) {
                 return res.status(400).send({
-                    message: "No victim with this id was found"
+                    message: "No casualty with this id was found"
                 })
             }
-            res.send(victim)
+            res.send(casualty)
         })
         .catch(err => {
             return res.status(500).send({
-                message: "Something went wrong in finding this victim"
+                message: "Something went wrong in finding this casualty"
             })
         })
 }

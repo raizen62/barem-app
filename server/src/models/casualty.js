@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
-const VictimSchema = mongoose.Schema({
+const CasualtySchema = mongoose.Schema({
   name: String,
   context: [{ type: String }],
   age: Number,
@@ -12,4 +12,4 @@ const VictimSchema = mongoose.Schema({
   }]
 });
 
-module.exports = mongoose.model("Victims", VictimSchema);
+module.exports = mongoose.model("Casualties", CasualtySchema);

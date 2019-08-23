@@ -22,7 +22,7 @@ exports.create = (req, res) => {
   const caz = new Case({
     caseCode: codCaz,
       context: req.body.context,
-    victims: req.body.victims
+      casualties: req.body.casualties
   });
 
   caz
@@ -39,7 +39,7 @@ exports.create = (req, res) => {
 
 exports.findAll = (req, res) => {
     Case.find()
-        .populate({path: 'victims', populate: {path: 'injuries'}})
+        .populate({path: 'casualties', populate: {path: 'injuries'}})
         .then(cases => {
             res.send(cases);
         })
@@ -52,7 +52,7 @@ exports.findAll = (req, res) => {
 
 exports.findOne = (req, res) => {
   Case.find({ caseCode: req.params.caseCode })
-      .populate({path: 'victims', populate: {path: 'injuries'}})
+      .populate({path: 'casualties', populate: {path: 'injuries'}})
       .then(caz => {
       if (!caz) {
         return res.status(400).send({

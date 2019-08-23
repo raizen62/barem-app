@@ -4,10 +4,13 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 const CaseSchema = mongoose.Schema({
   caseCode: String,
   context: String,
-  victims: [
+    createDate: Date.now(),
+    weather: String,
+    location: String,
+    casualties: [
     {
       type: ObjectId,
-      ref: 'Victims'
+        ref: 'Casualties'
     }
   ]
 });
