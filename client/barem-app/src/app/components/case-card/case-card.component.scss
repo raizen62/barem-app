@@ -58,7 +58,12 @@
     }
 
     .case-code{
-      margin-right: 24px;
+      margin-right: 16px;
+      mat-chip{
+        min-width: 62px;
+        display: flex;
+        justify-content: center;
+      }
     }
 
     .number-of-casualties-container{
