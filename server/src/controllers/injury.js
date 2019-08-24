@@ -12,15 +12,15 @@ exports.findAll = (req, res) => {
 };
 
 exports.findOne = (req, res) => {
-    Injury.find({name: req.params.name})
+    Injury.find({id: req.params.id})
         .then(injury => {
             if (!injury) {
                 return res.status(400).send({
                     message: "Nu a fost gasit nici o leziune cu acest nume"
                 });
             }
+            res.send(injury);
         })
-    res.send(injury);
 }
 
 exports.create = (req, res) => {
@@ -49,7 +49,7 @@ exports.create = (req, res) => {
 }
 
 exports.delete = (req, res) => {
-    Injury.findOneAndRemove({id: req.params.id})
+    Injury.findOneAndDelete({id: req.params.id})
         .then(injury => {
             if (!injury) {
                 return res.status(404).send({
