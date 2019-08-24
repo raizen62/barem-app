@@ -31,9 +31,9 @@ exports.create = (req, res) => {
     }
 
     const injury = new Injury({
-        name: req.body.nume,
-        location: req.body.locatie,
-        maneuvers: req.body.manevre
+        name: req.body.name,
+        location: req.body.location,
+        maneuvers: req.body.maneuvers
     })
 
     injury
