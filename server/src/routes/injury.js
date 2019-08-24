@@ -5,7 +5,7 @@ module.exports = app => {
 
     app.get("/injuries/:id", injuries.findOne)
 
-    app.post("injuries", injuries.create);
+    app.post("/injuries", injuries.create);
 
     app.delete("/injuries/:id", injuries.delete);
 };
