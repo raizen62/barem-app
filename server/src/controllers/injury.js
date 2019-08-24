@@ -12,7 +12,7 @@ exports.findAll = (req, res) => {
 };
 
 exports.findOne = (req, res) => {
-    Injury.find({id: req.params.id})
+    Injury.find({_id: req.params.id})
         .then(injury => {
             if (!injury) {
                 return res.status(400).send({
@@ -49,7 +49,7 @@ exports.create = (req, res) => {
 }
 
 exports.delete = (req, res) => {
-    Injury.findOneAndDelete({id: req.params.id})
+    Injury.findOneAndDelete({_id: req.params.id})
         .then(injury => {
             if (!injury) {
                 return res.status(404).send({
