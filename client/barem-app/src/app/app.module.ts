@@ -52,6 +52,7 @@ import {AdminViewInjuriesComponent} from './components/admin/admin-view/admin-vi
 import {CaseCardComponent} from './components/case-card/case-card.component';
 import {InjuriesCardComponent} from './components/injuries-card/injuries-card.component';
 import { CasesComponent } from './components/cases/cases.component';
+import { CreateInjuryComponent } from './components/create-injury/create-injury.component';
 
 
 @NgModule({
@@ -79,7 +80,8 @@ import { CasesComponent } from './components/cases/cases.component';
     AdminViewInjuriesComponent,
     CaseCardComponent,
     InjuriesCardComponent,
-    CasesComponent
+    CasesComponent,
+    CreateInjuryComponent
   ],
   imports: [
     BrowserModule,
