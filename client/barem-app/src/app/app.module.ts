@@ -1,7 +1,6 @@
 import { CasualtyService } from './services/casualty.service';
 import { InjuryService } from './services/injury.service';
 import { ManeuverService } from './services/maneuver.service';
-import { VictimService } from './services/victim.service';
 import { CaseService } from 'src/app/services/case.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
