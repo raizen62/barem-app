@@ -32,7 +32,7 @@ app.use((req, res, next) => {
 
 //Routes
 require("./routes/case")(app);
-require("./routes/victim")(app);
+require("./routes/casualty")(app);
 require("./routes/injury")(app);
 mongoose.Promise = global.Promise;
 

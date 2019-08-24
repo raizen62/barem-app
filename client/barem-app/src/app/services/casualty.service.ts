@@ -20,11 +20,11 @@ export class CasualtyService {
   }
 
   getCasualty(id: string): Observable<Casualty> {
-    return this.http.get(`https://barem-dezastre.herokuapp.com/victims/${id}`) as Observable<Casualty>;
+    return this.http.get(`https://barem-dezastre.herokuapp.com/casualties/${id}`) as Observable<Casualty>;
   }
 
   getCasualties(): Observable<Casualty[]> {
-    return this.http.get('https://barem-dezastre.herokuapp.com/victims/') as Observable<Casualty[]>;
+    return this.http.get('https://barem-dezastre.herokuapp.com/casualties/') as Observable<Casualty[]>;
   }
   
 }
