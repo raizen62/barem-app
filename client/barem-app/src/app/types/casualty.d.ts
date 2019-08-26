@@ -1,9 +1,9 @@
 import { Injury } from './injury';
-export interface Victim {
+export interface Casualty {
   _id?: any;
   name?: string;
   age?: number;
-  context?: string[];
-  injuries: Injury[];
+  contexts?: string[];
+  injuries?: Injury[];
   details?: string;
 }

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {VictimService} from "../../../../services/victim.service";
+import { CasualtyService } from 'src/app/services/casualty.service';
 
 @Component({
   selector: 'app-admin-view-casualties',
@@ -9,7 +9,7 @@ import {VictimService} from "../../../../services/victim.service";
 export class AdminViewCasualtiesComponent implements OnInit {
   casualties$;
 
-  constructor(private casualtyService: VictimService) {
+  constructor(private casualtyService: CasualtyService) {
   }
 
   ngOnInit() {

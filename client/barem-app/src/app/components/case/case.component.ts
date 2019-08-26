@@ -1,11 +1,11 @@
-import { VictimService } from './../../services/victim.service';
-import { switchMap, map } from 'rxjs/operators';
+import { Casualty } from './../../types/casualty.d';
+import { CasualtyService } from './../../services/casualty.service';
+import { switchMap } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { CaseService } from 'src/app/services/case.service';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Case } from 'src/app/types/case';
-import { Victim } from 'src/app/types/victim';
 
 @Component({
   selector: 'app-case',
@@ -15,12 +15,12 @@ import { Victim } from 'src/app/types/victim';
 export class CaseComponent implements OnInit {
 
   case$: Observable<Case>;
-  chief$: Observable<Victim>;
+  chief$: Observable<Casualty>;
 
   constructor(
     private caseService: CaseService,
     private activatedRoute: ActivatedRoute,
-    private victimService: VictimService
+    private casualtyService: CasualtyService
   ) {}
 
   ngOnInit() {
@@ -30,6 +30,6 @@ export class CaseComponent implements OnInit {
       })
     );
 
-    this.chief$ = this.victimService.getChief();
+    this.chief$ = this.casualtyService.getChief();
   }
 }

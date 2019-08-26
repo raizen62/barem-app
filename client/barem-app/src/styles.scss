@@ -88,3 +88,56 @@ app-casualty-card{
 .mat-tab-label-active {
   opacity: 1 !important;
 }
+
+.mat-fab.mat-accent{
+  background-color: $primary;
+}
+
+.full-screen-modal{
+  mat-dialog-container{
+    border-radius: 0;
+    padding: 0;
+  }
+}
+
+.full-screen-overlay{
+  display: none;
+}
+
+.mat-label{
+  display: inline-block;
+  color: rgba(0, 0, 0, .54);
+  font-family: 'Roboto', sans-serif;
+  line-height: 32px;
+  margin-bottom: 4px;
+}
+
+.custom-form-field{
+  padding-bottom: 1.25em;
+}
+
+mat-chip{
+  font-family: 'Roboto', sans-serif;
+}
+
+// .mat-input-element {
+//   caret-color: $primary;
+// }
+
+// .mat-form-field.mat-focused {
+//   .mat-form-field-ripple {
+//     background-color: $primary;
+//   }
+//   .mat-form-field-label{
+//     color: black;
+//   }
+// }
+
+.top-bar-title{
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  padding-top: 4px;
+  // font-weight: 500;
+  margin: 0;
+  margin-left: 16px;
+}

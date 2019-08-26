@@ -1,0 +1,87 @@
+<!-- <mat-form-field>
+    <mat-label>Nume</mat-label>
+    <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="3"></textarea>
+</mat-form-field>
+
+<div class="card add-maneuver-card">
+    <div class="add-button">
+        <button mat-fab (click)="openAddManeuver()">
+            <mat-icon>add</mat-icon>
+        </button>
+        <label class="mat-typography">Adauga manevra</label>
+    </div>
+</div> -->
+
+<mat-sidenav-container class="container" [hasBackdrop]="false">
+    <mat-sidenav #sidenav mode="push" opened class="sidenav" [fixedInViewport]="true" opened="false" position="end">
+        <div class="header">
+            <button mat-icon-button (click)="sidenav.toggle()">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            
+            <span class="top-bar-title mat-typogrphy">Adauga manevra</span>
+        </div>
+        
+        <div class="content">
+            <mat-form-field class="example-full-width">
+                <textarea placeholder="Description" matInput cdkFocusInitial cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+                    cdkAutosizeMinRows="1" cdkAutosizeMaxRows="3" [(ngModel)]="maneuver.description"></textarea>
+            </mat-form-field>
+
+            <div class="custom-form-field">
+                <label class="mat-label">Punctaj mediu</label>
+                <mat-chip-list class="custom-chip-list">
+                    <mat-chip [selected]="maneuver.score.average == null" (click)="maneuver.score.average = null">-</mat-chip>
+                    <mat-chip *ngFor="let x of [].constructor(16); let i = index" [selected]="i + 1 === maneuver.score.average"
+                        (click)="maneuver.score.average = i + 1">{{ i + 1 }}</mat-chip>
+                </mat-chip-list>
+            </div>
+        
+            <div class="custom-form-field">
+                <label class="mat-label">Punctaj maxim</label>
+                <mat-chip-list class="custom-chip-list">
+                    <mat-chip *ngFor="let x of [].constructor(16); let i = index" [selected]="i + 1 === maneuver.score.maximum" (click)="maneuver.score.maximum = i + 1">{{ i + 1 }}</mat-chip>
+                </mat-chip-list>
+            </div>
+
+            <button mat-raised-button color="accent" [disabled]="!maneuver.description || maneuver.score.maximum == null" (click)="addManeuver()" (click)="initAddManeuver()" (click)="sidenav.toggle()">Adauga</button>
+
+        </div>
+    </mat-sidenav>
+
+    <mat-sidenav-content [formGroup]="injuryForm">
+        <div class="content">
+            <mat-form-field>
+                <mat-label>Nume</mat-label>
+                <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="3"
+                    formControlName="name"></textarea>
+            </mat-form-field>
+
+            <div class="card add-maneuver-card">
+                <div class="add-button">
+                    <button mat-fab (click)="sidenav.toggle()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                    <label class="mat-typography">Adauga manevra</label>
+                </div>
+            </div>
+            
+            <div class="maneuvers-container" formArrayName="maneuvers">
+                <label class="mat-label">Manevre</label>
+                <div class="maneuver-card" *ngFor="let maneuver of maneuversForms.controls; let i = index">
+                    <div class="maneuver-card-description-container">
+                        <span class="mat-small maneuver-card-description">{{ maneuver.value.description }}</span>
+                    </div>
+                    <div class="score-container">
+                        <div class="score">{{ maneuver.value.score.average || '-' }}</div>
+                        <div class="score">{{ maneuver.value.score.maximum }}</div>
+                    </div>
+                </div>
+            </div>
+                        
+            <button mat-raised-button color="accent" [disabled]="!injuryForm.value.name" (click)="saveInjury()">Creeaza
+                leziune</button>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

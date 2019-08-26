@@ -1,14 +1,13 @@
+import { CasualtyService } from './../../services/casualty.service';
 import { CaseService } from './../../services/case.service';
-import { VictimService } from './../../services/victim.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { map, tap, switchMap, shareReplay } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Case } from 'src/app/types/case';
-import { Victim } from 'src/app/types/victim';
-import { Maneuver } from 'src/app/types/maneuver';
 import { InjuryService } from 'src/app/services/injury.service';
 import { Injury } from 'src/app/types/injury';
+import { Casualty } from 'src/app/types/casualty';
 
 @Component({
   selector: 'app-barem',
@@ -19,7 +18,7 @@ export class BaremComponent implements OnInit {
 
   chief = false;
   case$: Observable<Case>;
-  victim$: Observable<Victim>;
+  victim$: Observable<Casualty>;
   baremStart$: Observable<Injury[]>;
   baremEnd$: Observable<Injury[]>;
 
@@ -27,9 +26,8 @@ export class BaremComponent implements OnInit {
   totalScore: number = 0;
 
   constructor(
-    private router: Router,
     private activatedRoute: ActivatedRoute,
-    private victimService: VictimService,
+    private casualtyService: CasualtyService,
     private caseService: CaseService,
     private injuryService: InjuryService
   ) { }
@@ -45,13 +43,13 @@ export class BaremComponent implements OnInit {
       switchMap(params => {
         if( params.victimId === "chief" ) {
           this.chief = true;
-          return this.victimService.getChief().pipe(
+          return this.casualtyService.getChief().pipe(
             tap(victim => {
               this.calculateTotalScore(victim.injuries);
             })
           );
         }
-        return this.victimService.getVictim(params.victimId).pipe(
+        return this.casualtyService.getCasualty(params.victimId).pipe(
           tap(victim => {
             this.calculateTotalScore(victim.injuries);
           })
@@ -59,16 +57,6 @@ export class BaremComponent implements OnInit {
       }),
       shareReplay(1)
     );
-    // this.victim$ = this.activatedRoute.params.pipe(
-    //   switchMap(params => {
-    //     return this.victimService.getVictim(params.victimId).pipe(
-    //       tap(victim => {
-    //         this.calculateTotalScore(victim.injuries);
-    //       })
-    //     );
-    //   }),
-    //   shareReplay(1)
-    // );
 
     this.baremStart$ = this.injuryService.getDefaultInjuries().pipe(
       map(injuries => {
@@ -78,6 +66,7 @@ export class BaremComponent implements OnInit {
       }),
       shareReplay(1)
     );
+
     this.baremEnd$ = this.injuryService.getDefaultInjuries().pipe(
       map(injuries => {
         injuries.splice(0,2);
@@ -93,7 +82,7 @@ export class BaremComponent implements OnInit {
   }
 
   calculateTotalScore(injuries: Injury[]): void{
-    injuries.map(injury => injury.manevre.map(maneuver => this.totalScore += maneuver.punctajMaxim));
+    // injuries.map(injury => injury.maneuvers.map(maneuver => this.totalScore += maneuver.score.maximum));
   }
 
 }

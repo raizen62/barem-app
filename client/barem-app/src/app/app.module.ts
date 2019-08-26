@@ -1,6 +1,6 @@
+import { CasualtyService } from './services/casualty.service';
 import { InjuryService } from './services/injury.service';
 import { ManeuverService } from './services/maneuver.service';
-import { VictimService } from './services/victim.service';
 import { CaseService } from 'src/app/services/case.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -22,7 +22,9 @@ import {
   MatExpansionModule,
   MatTabsModule,
   MatCheckboxModule,
-  MatChipsModule
+  MatChipsModule,
+  MatDialogModule,
+  MatSidenavModule
 } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -51,6 +53,10 @@ import {AdminViewCasualtiesComponent} from './components/admin/admin-view/admin-
 import {AdminViewInjuriesComponent} from './components/admin/admin-view/admin-view-injuries/admin-view-injuries.component';
 import {CaseCardComponent} from './components/case-card/case-card.component';
 import {InjuriesCardComponent} from './components/injuries-card/injuries-card.component';
+import { CasesComponent } from './components/cases/cases.component';
+import { CreateInjuryComponent } from './components/create-injury/create-injury.component';
+import { AddManeuverComponent } from './components/add-maneuver/add-maneuver.component';
+import { ManeuverCardComponent } from './components/maneuver-card/maneuver-card.component';
 
 
 @NgModule({
@@ -77,7 +83,14 @@ import {InjuriesCardComponent} from './components/injuries-card/injuries-card.co
     AdminViewCasualtiesComponent,
     AdminViewInjuriesComponent,
     CaseCardComponent,
-    InjuriesCardComponent
+    InjuriesCardComponent,
+    CasesComponent,
+    CreateInjuryComponent,
+    AddManeuverComponent,
+    ManeuverCardComponent
+  ],
+  entryComponents: [
+    AddManeuverComponent
   ],
   imports: [
     BrowserModule,
@@ -102,11 +115,13 @@ import {InjuriesCardComponent} from './components/injuries-card/injuries-card.co
     MatTabsModule,
     MatCheckboxModule,
     MatChipsModule,
+    MatDialogModule,
+    MatSidenavModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
   ],
   providers: [
     CaseService,
-    VictimService,
+    CasualtyService,
     InjuryService,
     ManeuverService
   ],

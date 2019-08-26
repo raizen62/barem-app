@@ -1,0 +1,22 @@
+<div class="header">
+    <button mat-icon-button mat-dialog-close>
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+</div>
+
+<div class="content">
+    <mat-form-field class="example-full-width">
+        <textarea placeholder="Description" matInput cdkFocusInitial cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1" cdkAutosizeMaxRows="3"></textarea>
+    </mat-form-field>
+
+    <div class="custom-form-field">
+        <label class="mat-label">Test</label>
+        <mat-chip-list aria-label="Fish selection">
+            <mat-chip>One fish</mat-chip>
+            <mat-chip>Two fish</mat-chip>
+            <mat-chip color="primary" selected>Primary fish</mat-chip>
+            <mat-chip color="accent" selected>Accent fish</mat-chip>
+        </mat-chip-list>
+    </div>
+</div>
