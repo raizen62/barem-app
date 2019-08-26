@@ -22,7 +22,9 @@ import {
   MatExpansionModule,
   MatTabsModule,
   MatCheckboxModule,
-  MatChipsModule
+  MatChipsModule,
+  MatDialogModule,
+  MatSidenavModule
 } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -53,6 +55,8 @@ import {CaseCardComponent} from './components/case-card/case-card.component';
 import {InjuriesCardComponent} from './components/injuries-card/injuries-card.component';
 import { CasesComponent } from './components/cases/cases.component';
 import { CreateInjuryComponent } from './components/create-injury/create-injury.component';
+import { AddManeuverComponent } from './components/add-maneuver/add-maneuver.component';
+import { ManeuverCardComponent } from './components/maneuver-card/maneuver-card.component';
 
 
 @NgModule({
@@ -81,7 +85,12 @@ import { CreateInjuryComponent } from './components/create-injury/create-injury.
     CaseCardComponent,
     InjuriesCardComponent,
     CasesComponent,
-    CreateInjuryComponent
+    CreateInjuryComponent,
+    AddManeuverComponent,
+    ManeuverCardComponent
+  ],
+  entryComponents: [
+    AddManeuverComponent
   ],
   imports: [
     BrowserModule,
@@ -106,6 +115,8 @@ import { CreateInjuryComponent } from './components/create-injury/create-injury.
     MatTabsModule,
     MatCheckboxModule,
     MatChipsModule,
+    MatDialogModule,
+    MatSidenavModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
   ],
   providers: [
