@@ -82,7 +82,7 @@ export class BaremComponent implements OnInit {
   }
 
   calculateTotalScore(injuries: Injury[]): void{
-    // injuries.map(injury => injury.maneuvers.map(maneuver => this.totalScore += maneuver.score.maximum));
+    injuries.map(injury => injury.maneuvers.map(maneuver => this.totalScore += maneuver.score.maximum));
   }
 
 }
