@@ -24,7 +24,9 @@ import {
   MatCheckboxModule,
   MatChipsModule,
   MatDialogModule,
-  MatSidenavModule
+  MatSidenavModule,
+  MatRippleModule,
+  MatMenuModule
 } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -56,7 +58,8 @@ import {InjuriesCardComponent} from './components/injuries-card/injuries-card.co
 import { CasesComponent } from './components/cases/cases.component';
 import { CreateInjuryComponent } from './components/create-injury/create-injury.component';
 import { AddManeuverComponent } from './components/add-maneuver/add-maneuver.component';
-import { ManeuverCardComponent } from './components/maneuver-card/maneuver-card.component';
+import { ManeuverListItemComponent } from './components/maneuver-list-item/maneuver-list-item.component';
+import { DialogAddScoreComponent } from './components/dialog-add-score/dialog-add-score.component';
 
 
 @NgModule({
@@ -87,10 +90,12 @@ import { ManeuverCardComponent } from './components/maneuver-card/maneuver-card.
     CasesComponent,
     CreateInjuryComponent,
     AddManeuverComponent,
-    ManeuverCardComponent
+    ManeuverListItemComponent,
+    DialogAddScoreComponent
   ],
   entryComponents: [
-    AddManeuverComponent
+    AddManeuverComponent,
+    DialogAddScoreComponent
   ],
   imports: [
     BrowserModule,
@@ -117,6 +122,8 @@ import { ManeuverCardComponent } from './components/maneuver-card/maneuver-card.
     MatChipsModule,
     MatDialogModule,
     MatSidenavModule,
+    MatRippleModule,
+    MatMenuModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
   ],
   providers: [

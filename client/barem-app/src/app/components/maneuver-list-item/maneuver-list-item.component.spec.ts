@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ManeuverCardComponent } from './maneuver-card.component';
+import { ManeuverListItemComponent } from './maneuver-list-item.component';
 
-describe('ManeuverCardComponent', () => {
-  let component: ManeuverCardComponent;
-  let fixture: ComponentFixture<ManeuverCardComponent>;
+describe('ManeuverListItemComponent', () => {
+  let component: ManeuverListItemComponent;
+  let fixture: ComponentFixture<ManeuverListItemComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ManeuverCardComponent ]
+      declarations: [ ManeuverListItemComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ManeuverCardComponent);
+    fixture = TestBed.createComponent(ManeuverListItemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

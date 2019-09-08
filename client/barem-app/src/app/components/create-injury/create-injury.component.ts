@@ -1,88 +1,78 @@
 import { InjuryService } from './../../services/injury.service';
 import { Maneuver } from './../../types/maneuver.d';
-import { FormBuilder, FormControl, FormArray, FormGroup } from '@angular/forms';
-import { AddManeuverComponent } from './../add-maneuver/add-maneuver.component';
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { FormBuilder, FormArray, FormGroup } from '@angular/forms';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { MatDialog, MatSidenav } from '@angular/material';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-create-injury',
   templateUrl: './create-injury.component.html',
-  styleUrls: ['./create-injury.component.scss']
+  styleUrls: ['./create-injury.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateInjuryComponent implements OnInit {
 
-  maneuver: Maneuver;
-
   injuryForm: FormGroup;
+  @ViewChild('sidenav', { static: false }) sidenav: MatSidenav;
+
+  editManeuver = null;
 
   constructor(
+    private router: Router,
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
-    private injuryService: InjuryService
+    private injuryService: InjuryService,
+    private location: Location
   ) { }
 
   ngOnInit() {
+    this.initInjuryForm();
+  }
+
+  initInjuryForm() {
     this.injuryForm = this.formBuilder.group({
       name: this.formBuilder.control(''),
       maneuvers: this.formBuilder.array([])
-    })
-
-    this.initAddManeuver();
-  }
-
-  createInjury(): void {
-    console.log(this.injuryForm.value);
-  }
-
-  openAddManeuver(): void {
-    this.dialog.open(AddManeuverComponent, {
-      maxWidth: '100vw',
-      maxHeight: '100vh',
-      height: '100%',
-      width: '100%',
-      panelClass: 'full-screen-modal',
-      backdropClass: 'full-screen-overlay',
-    })
+    });
   }
 
   get maneuversForms() {
     return this.injuryForm.get('maneuvers') as FormArray;
   }
 
-  addManeuver(): void {
-    let score = {
-      maximum: this.maneuver.score.maximum
-    };
-    if (this.maneuver.score.average) {
-      score['average'] = this.maneuver.score.average;
-    }
+  addManeuver(value): void {
+    this.editManeuver = null;
 
-    const maneuver = this.formBuilder.group({
-      description: this.maneuver.description,
-      score: this.formBuilder.group(score)
-    });
+    if (value && value.maneuver) {
+      const maneuver = this.formBuilder.group({
+        description: value.maneuver.description,
+        score: this.formBuilder.group(value.maneuver.score)
+      });
 
-    this.maneuversForms.push(maneuver);
-    // console.log(this.injuryForm.value);
-  }
-
-  deleteManeuver(i: number): void {
-    this.maneuversForms.removeAt(i);
-  }
-
-  initAddManeuver(): void {
-    this.maneuver = {
-      description: '',
-      score: {
-        maximum: null,
-        average: null
+      if (value.index == null) {
+        this.maneuversForms.push(maneuver);
+      } else {
+        this.maneuversForms.at(value.index).value.description = value.maneuver.description;
+        this.maneuversForms.at(value.index).value.score = value.maneuver.score;
       }
+    } else if (value && !value.maneuver && value.index != null) {
+      this.maneuversForms.removeAt(value.index);
     }
+    this.sidenav.close();
   }
 
   saveInjury(): void {
-    this.injuryService.postInjury(this.injuryForm.value).subscribe(injury => console.log(injury));
+    // this.injuryService.postInjury(this.injuryForm.value).subscribe(injury => console.log(injury));
+    this.router.navigate(['/']);
+  }
+
+  setEditManeuver(index: number) {
+    this.editManeuver = {
+      maneuver: this.maneuversForms.at(index).value,
+      index: index
+    };
   }
 
 }
