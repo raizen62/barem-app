@@ -8,5 +8,7 @@ module.exports = app => {
     app.post("/injuries", injuries.create);
 
     app.delete("/injuries/:id", injuries.delete);
+    
+    app.patch("/injuries/:id", injuries.update);
 };
   
