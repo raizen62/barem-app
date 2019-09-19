@@ -69,3 +69,15 @@ exports.delete = (req, res) => {
             })
         })
 }
+
+exports.update = (req, res) => {
+    Injury.findOneAndUpdate({ "_id": req.params.id }, { "$set": { "name": req.body.name, "maneuvers": req.body.maneuvers, "location": req.body.location}})
+        .then(injury => {
+            res.send(injury)
+        })
+        .catch(err => {
+            res.status(500).send(err);
+        })
+    }
+});
+}
