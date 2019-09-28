@@ -26,7 +26,8 @@ import {
   MatDialogModule,
   MatSidenavModule,
   MatRippleModule,
-  MatMenuModule
+  MatMenuModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -45,7 +46,6 @@ import { AccessCaseComponent } from './components/access-case/access-case.compon
 import { CaseCodeComponent } from './components/case-code/case-code.component';
 import { BaremComponent } from './components/barem/barem.component';
 import { InjuriesToStringPipe } from './pipes/injuries-to-string.pipe';
-import { InjuryComponent } from './components/barem/injury/injury.component';
 import { ManeuverComponent } from './components/barem/injury/maneuver/maneuver.component';
 import { CasualtyCardComponent } from './components/casualty-card/casualty-card.component';
 import { TriageComponent } from './components/triage/triage.component';
@@ -60,6 +60,11 @@ import { CreateInjuryComponent } from './components/create-injury/create-injury.
 import { AddManeuverComponent } from './components/add-maneuver/add-maneuver.component';
 import { ManeuverListItemComponent } from './components/maneuver-list-item/maneuver-list-item.component';
 import { DialogAddScoreComponent } from './components/dialog-add-score/dialog-add-score.component';
+import { InjuriesComponent } from './components/injuries/injuries.component';
+import { InjuryListItemComponent } from './components/injury-list-item/injury-list-item.component';
+import { InjuryComponent } from './components/injury/injury.component';
+import { BaremInjuryComponent } from './components/barem-injury/barem-injury.component';
+import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 
 
 @NgModule({
@@ -91,11 +96,16 @@ import { DialogAddScoreComponent } from './components/dialog-add-score/dialog-ad
     CreateInjuryComponent,
     AddManeuverComponent,
     ManeuverListItemComponent,
-    DialogAddScoreComponent
+    DialogAddScoreComponent,
+    InjuriesComponent,
+    InjuryListItemComponent,
+    BaremInjuryComponent,
+    ConfirmationDialogComponent
   ],
   entryComponents: [
     AddManeuverComponent,
-    DialogAddScoreComponent
+    DialogAddScoreComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -124,6 +134,7 @@ import { DialogAddScoreComponent } from './components/dialog-add-score/dialog-ad
     MatSidenavModule,
     MatRippleModule,
     MatMenuModule,
+    MatProgressSpinnerModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
   ],
   providers: [

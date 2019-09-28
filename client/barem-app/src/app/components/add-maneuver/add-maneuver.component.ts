@@ -1,7 +1,10 @@
-import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectionStrategy, SimpleChanges, OnChanges } from '@angular/core';
+import { untilDestroyed } from 'ngx-take-until-destroy';
+import { BehaviorSubject } from 'rxjs';
+import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectionStrategy, OnChanges, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { DialogAddScoreComponent } from '../dialog-add-score/dialog-add-score.component';
 import { Maneuver } from 'src/app/types/maneuver';
+import { tap, shareReplay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-maneuver',
@@ -9,10 +12,17 @@ import { Maneuver } from 'src/app/types/maneuver';
   styleUrls: ['./add-maneuver.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AddManeuverComponent implements OnInit, OnChanges {
+export class AddManeuverComponent implements OnInit, OnDestroy {
 
-  @Input() editManeuver?: { maneuver: Maneuver, index: number };
-  @Output() emitManeuver = new EventEmitter<{ maneuver: Maneuver, index: number }>();
+  @Input()
+  set maneuver(maneuver: { maneuver: Maneuver, index: number }) {
+    if (maneuver) {
+      this.initManeuver();
+      this.setFromManeuver(maneuver.maneuver);
+      this.editManeuver$.next(maneuver);
+    }
+  }
+  editManeuver$ = new BehaviorSubject <{ maneuver: Maneuver, index: number } | null>(null);
 
   description = '';
   score = {
@@ -31,6 +41,9 @@ export class AddManeuverComponent implements OnInit, OnChanges {
     }
   };
 
+  @Output() setManeuver = new EventEmitter<{ maneuver: Maneuver | null, index: number | null }>();
+  @Output() backEmitter = new EventEmitter<boolean>();
+
   constructor(
     public dialog: MatDialog
   ) { }
@@ -38,59 +51,87 @@ export class AddManeuverComponent implements OnInit, OnChanges {
   ngOnInit() {
   }
 
-  addManeuver(): void {
-    const maneuver = {
-      description: this.description,
-      score: null
+  private initManeuver(): void {
+    this.description = '';
+    // this.getKeys(this.score.average).map(key => this.score.average[key] = false);
+    // this.score.average['0'] = true;
+    // this.getKeys(this.score.maximum).map(key => this.score.maximum[key] = false);
+    // this.editManeuver$.next(null);
+    this.score = {
+      average: {
+        0: true,
+        1: false,
+        2: false,
+        3: false,
+        4: false
+      },
+      maximum: {
+        1: false,
+        2: false,
+        4: false,
+        8: false
+      }
     };
+    this.editManeuver$.next(null);
+  }
 
-    maneuver.score = {
+  private setFromManeuver(maneuver: Maneuver): void {
+    this.description = maneuver.description;
+    this.setScore(this.score.maximum, maneuver.score.maximum + '');
+    if (maneuver.score.average) {
+      this.setScore(this.score.average, maneuver.score.average + '');
+    } else {
+      this.setScore(this.score.average, '0');
+    }
+  }
+
+  save(): void {
+    const score = {
       maximum: this.getScore(this.score.maximum)
     };
     if (!this.score.average['0']) {
-      maneuver.score['average'] = this.getScore(this.score.average);
+      score['average'] = this.getScore(this.score.average);
     }
+    const maneuver = {
+      description: this.description,
+      score
+    };
 
-    if (!this.editManeuver) {
-      this.emitManeuver.emit({
+    const editManeuver = this.editManeuver$.getValue();
+    if (!editManeuver) {
+      this.setManeuver.emit({
         maneuver,
         index: null
       });
     } else {
-      this.emitManeuver.emit({
+      this.setManeuver.emit({
         maneuver,
-        index: this.editManeuver.index
+        index: editManeuver.index
       });
     }
     this.initManeuver();
   }
 
-  deleteManeuver(): void {
-    this.emitManeuver.emit({maneuver: null, index: this.editManeuver.index});
+  delete(): void {
+    const editManeuver = this.editManeuver$.getValue();
+    this.setManeuver.emit({maneuver: null, index: editManeuver.index});
     this.initManeuver();
   }
 
-  private getKeys(object): string[] {
+  getKeys(object): string[] {
     return Object.keys(object);
   }
 
-  private setScore(score: any, selectedScore: string): void {
+  setScore(score: any, selectedScore: string): void {
     this.getKeys(score).map(key => score[key] = false);
     score[selectedScore] = true;
   }
 
-  private getScore(score: any): number {
+  getScore(score: any): number {
     return parseInt(this.getKeys(score).find(key => score[key] === true), 10);
   }
 
-  private initManeuver(): void {
-    this.description = '';
-    this.getKeys(this.score.average).map(key => this.score.average[key] = false);
-    this.score.average['0'] = true;
-    this.getKeys(this.score.maximum).map(key => this.score.maximum[key] = false);
-  }
-
-  private openAddScoreDialog(type: string): void {
+  openAddScoreDialog(type: string): void {
     const dialogRef = this.dialog.open(DialogAddScoreComponent, {
       width: '100vw'
     });
@@ -102,24 +143,12 @@ export class AddManeuverComponent implements OnInit, OnChanges {
     });
   }
 
-  private close(): void {
-    this.emitManeuver.emit(null);
+  back(): void {
     this.initManeuver();
+    this.backEmitter.emit();
   }
 
-  private setManeuver(maneuver: Maneuver): void {
-    this.description = maneuver.description;
-    this.setScore(this.score.maximum, maneuver.score.maximum + '');
-    if (maneuver.score.average) {
-      this.setScore(this.score.average, maneuver.score.average + '');
-    } else {
-      this.setScore(this.score.average, '0');
-    }
-  }
+  ngOnDestroy() {
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.editManeuver.currentValue) {
-      this.setManeuver(changes.editManeuver.currentValue.maneuver);
-    }
   }
 }

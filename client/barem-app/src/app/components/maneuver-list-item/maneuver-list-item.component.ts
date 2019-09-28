@@ -8,7 +8,7 @@ import { Maneuver } from 'src/app/types/maneuver';
 })
 export class ManeuverListItemComponent implements OnInit {
 
-  @Input() maneuver: Maneuver;
+  @Input() maneuver!: Maneuver;
 
   constructor() { }
 

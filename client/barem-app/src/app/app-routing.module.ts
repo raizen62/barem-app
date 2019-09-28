@@ -1,3 +1,4 @@
+import { InjuriesComponent } from './components/injuries/injuries.component';
 import { CreateInjuryComponent } from './components/create-injury/create-injury.component';
 import { TriageComponent } from './components/triage/triage.component';
 import { AccessCaseComponent } from './components/access-case/access-case.component';
@@ -16,6 +17,7 @@ import { CasesComponent } from './components/cases/cases.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
+  {path: 'injuries', component: InjuriesComponent},
   {path: 'create-injury', component: CreateInjuryComponent},
   {path: 'cases', component: CasesComponent},
   {path: 'triage', component: TriageComponent},

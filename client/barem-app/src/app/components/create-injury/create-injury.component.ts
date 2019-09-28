@@ -1,10 +1,25 @@
+import { untilDestroyed } from 'ngx-take-until-destroy';
+import { BehaviorSubject } from 'rxjs';
 import { InjuryService } from './../../services/injury.service';
-import { Maneuver } from './../../types/maneuver.d';
-import { FormBuilder, FormArray, FormGroup } from '@angular/forms';
-import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { FormBuilder, FormArray, FormGroup, FormControl } from '@angular/forms';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ChangeDetectionStrategy,
+  Output,
+  EventEmitter,
+  Input,
+  ElementRef,
+  AfterViewInit,
+  OnDestroy
+} from '@angular/core';
 import { MatDialog, MatSidenav } from '@angular/material';
-import { Router } from '@angular/router';
-import { Location } from '@angular/common';
+import { Injury } from 'src/app/types/injury';
+import { tap, shareReplay } from 'rxjs/operators';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { Maneuver } from 'src/app/types/maneuver';
+import { cloneDeep } from 'lodash';
 
 @Component({
   selector: 'app-create-injury',
@@ -12,39 +27,65 @@ import { Location } from '@angular/common';
   styleUrls: ['./create-injury.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CreateInjuryComponent implements OnInit {
+export class CreateInjuryComponent implements OnInit, OnDestroy, AfterViewInit {
 
+  @Input()
+  set injury(injury: Injury) {
+    if (injury) {
+      this.editInjury$.next(cloneDeep(injury));
+      this.setFormFromInjury(cloneDeep(injury));
+    }
+  }
+  editInjury$ = new BehaviorSubject<Injury | null>(null);
+  editManeuver$ = new BehaviorSubject<{ maneuver: Maneuver, index: number } | null>(null);
   injuryForm: FormGroup;
-  @ViewChild('sidenav', { static: false }) sidenav: MatSidenav;
+  scrolling$ = new BehaviorSubject<boolean>(false);
+  loading$ = new BehaviorSubject<boolean>(false);
 
-  editManeuver = null;
+  @Output() setInjury = new EventEmitter<Injury | null>();
+  @Output() backEmitter = new EventEmitter<boolean>();
+
+  @ViewChild('sidenav', { static: false }) sidenav: MatSidenav;
+  @ViewChild('screen', { static: false }) screen: ElementRef;
 
   constructor(
-    private router: Router,
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private injuryService: InjuryService,
-    private location: Location
   ) { }
 
   ngOnInit() {
-    this.initInjuryForm();
+    this.injuryForm = this.getInjuryForm();
   }
 
-  initInjuryForm() {
-    this.injuryForm = this.formBuilder.group({
+  private getInjuryForm(): FormGroup {
+    return this.formBuilder.group({
       name: this.formBuilder.control(''),
       maneuvers: this.formBuilder.array([])
     });
+  }
+
+  private setFormFromInjury(injury: Injury) {
+    this.injuryForm.patchValue({name: injury.name});
+    this.emptyManeuvers();
+    if (injury.maneuvers) {
+      for (const maneuver of injury.maneuvers) {
+        this.maneuversForms.push(new FormControl(maneuver));
+      }
+    }
+  }
+
+  private emptyManeuvers() {
+    while (this.maneuversForms.controls.length > 0) {
+      this.maneuversForms.removeAt(0);
+    }
   }
 
   get maneuversForms() {
     return this.injuryForm.get('maneuvers') as FormArray;
   }
 
-  addManeuver(value): void {
-    this.editManeuver = null;
-
+  setManeuver(value): void {
     if (value && value.maneuver) {
       const maneuver = this.formBuilder.group({
         description: value.maneuver.description,
@@ -63,16 +104,77 @@ export class CreateInjuryComponent implements OnInit {
     this.sidenav.close();
   }
 
-  saveInjury(): void {
-    // this.injuryService.postInjury(this.injuryForm.value).subscribe(injury => console.log(injury));
-    this.router.navigate(['/']);
+  save(): void {
+    this.loading$.next(true);
+    const editInjury = this.editInjury$.getValue();
+    if (editInjury) {
+      const injuryWithId: Injury = { ...this.injuryForm.value, _id: editInjury._id };
+      this.injuryService.updateInjury(injuryWithId)
+        .subscribe(injury => {
+          this.setInjury.emit(injuryWithId);
+          this.loading$.next(false);
+          this.backEmitter.emit();
+        });
+    } else {
+      this.injuryService.postInjury(this.injuryForm.value)
+        .subscribe(injury => {
+          this.setInjury.emit(injury);
+          this.loading$.next(false);
+          // this.backEmitter.emit();
+        });
+    }
   }
 
-  setEditManeuver(index: number) {
-    this.editManeuver = {
+  editManeuver(index: number) {
+    this.editManeuver$.next({
       maneuver: this.maneuversForms.at(index).value,
       index: index
-    };
+    });
+  }
+
+  back() {
+    this.backEmitter.emit();
+  }
+
+  close() {
+    this.sidenav.close();
+  }
+
+  delete() {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '350px',
+      data: ' Ești sigur că vrei să ștergi leziunea?',
+      autoFocus: false
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loading$.next(true);
+        const editInjury = this.editInjury$.getValue();
+        this.injuryService.deleteInjury(editInjury._id).pipe(
+          untilDestroyed(this)
+        )
+        .subscribe(res => {
+          this.loading$.next(false);
+          this.setInjury.next(null);
+        });
+      }
+    });
+  }
+
+  ngAfterViewInit() {
+    this.screen.nativeElement.addEventListener('scroll', () => {
+      const scrollTop = this.screen.nativeElement.scrollTop;
+      const scrolling = this.scrolling$.getValue();
+      if (scrollTop > 0 && scrolling === false) {
+        this.scrolling$.next(true);
+      } else if (scrollTop === 0 && scrolling === true) {
+        this.scrolling$.next(false);
+      }
+    }, true);
+  }
+
+  ngOnDestroy() {
+
   }
 
 }
