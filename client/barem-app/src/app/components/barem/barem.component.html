@@ -10,8 +10,8 @@
         <mat-tab label="Barem">
             <div class="container">
                 <div class="injuries-container">
-                    <app-injury *ngFor="let injury of (victim$ | async)?.injuries" [injury]="injury"
-                        (scoreEmitter)="calculateScore($event)"></app-injury>
+                    <app-barem-injury *ngFor="let injury of (victim$ | async)?.injuries" [injury]="injury"
+                        (scoreEmitter)="calculateScore($event)"></app-barem-injury>
                 </div>
     
                 <div class="score-container">
@@ -41,12 +41,12 @@
 <div *ngIf="(case$ | async)?.context && chief === false" class="container">
     
     <div *ngIf="(case$ | async)?.context && chief === false" class="injuries-container">
-        <app-injury *ngFor="let injury of (baremStart$ | async)" [injury]="injury"
-            (scoreEmitter)="calculateScore($event)"></app-injury>
-        <app-injury *ngFor="let injury of (victim$ | async)?.injuries" [injury]="injury"
-            (scoreEmitter)="calculateScore($event)"></app-injury>
-        <app-injury *ngFor="let injury of (baremEnd$ | async)" [injury]="injury" 
-            (scoreEmitter)="calculateScore($event)"></app-injury>
+        <app-barem-injury *ngFor="let injury of (baremStart$ | async)" [injury]="injury"
+            (scoreEmitter)="calculateScore($event)"></app-barem-injury>
+        <app-barem-injury *ngFor="let injury of (victim$ | async)?.injuries" [injury]="injury"
+            (scoreEmitter)="calculateScore($event)"></app-barem-injury>
+        <app-barem-injury *ngFor="let injury of (baremEnd$ | async)" [injury]="injury" 
+            (scoreEmitter)="calculateScore($event)"></app-barem-injury>
     </div>
     
     <div class="score-container">

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ManeuverCardComponent } from './maneuver-card.component';
+import { BaremInjuryComponent } from './barem-injury.component';
 
-describe('ManeuverCardComponent', () => {
-  let component: ManeuverCardComponent;
-  let fixture: ComponentFixture<ManeuverCardComponent>;
+describe('BaremInjuryComponent', () => {
+  let component: BaremInjuryComponent;
+  let fixture: ComponentFixture<BaremInjuryComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ManeuverCardComponent ]
+      declarations: [ BaremInjuryComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ManeuverCardComponent);
+    fixture = TestBed.createComponent(BaremInjuryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

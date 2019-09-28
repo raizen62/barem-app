@@ -7,6 +7,7 @@ import { Injury } from '../types/injury';
   providedIn: 'root'
 })
 export class InjuryService {
+
   constructor(private http: HttpClient) {
   }
 
@@ -22,7 +23,15 @@ export class InjuryService {
     return (this.http.get('../../assets/data/defaultInjuries.json') as Observable<Injury[]>);
   }
 
-  postInjury(injury: Injury): Observable<Injury>{
+  postInjury(injury: Injury): Observable<Injury> {
     return this.http.post(`https://barem-dezastre.herokuapp.com/injuries`, injury) as Observable<Injury>;
+  }
+
+  updateInjury(injury: Injury): Observable<Injury> {
+    return this.http.patch(`https://barem-dezastre.herokuapp.com/injuries/${injury._id}`, injury) as Observable<Injury>;
+  }
+
+  deleteInjury(id: string): Observable<Injury> {
+    return this.http.delete(`https://barem-dezastre.herokuapp.com/injuries/${id}`) as Observable<Injury>;
   }
 }

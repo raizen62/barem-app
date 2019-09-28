@@ -2,11 +2,11 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Injury } from 'src/app/types/injury';
 
 @Component({
-  selector: 'app-injury',
-  templateUrl: './injury.component.html',
-  styleUrls: ['./injury.component.scss']
+  selector: 'app-barem-injury',
+  templateUrl: './barem-injury.component.html',
+  styleUrls: ['./barem-injury.component.scss']
 })
-export class InjuryComponent implements OnInit {
+export class BaremInjuryComponent implements OnInit {
 
   @Input() injury: Injury;
   @Output() scoreEmitter = new EventEmitter<number>();

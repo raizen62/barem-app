@@ -24,7 +24,10 @@ import {
   MatCheckboxModule,
   MatChipsModule,
   MatDialogModule,
-  MatSidenavModule
+  MatSidenavModule,
+  MatRippleModule,
+  MatMenuModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -43,7 +46,6 @@ import { AccessCaseComponent } from './components/access-case/access-case.compon
 import { CaseCodeComponent } from './components/case-code/case-code.component';
 import { BaremComponent } from './components/barem/barem.component';
 import { InjuriesToStringPipe } from './pipes/injuries-to-string.pipe';
-import { InjuryComponent } from './components/barem/injury/injury.component';
 import { ManeuverComponent } from './components/barem/injury/maneuver/maneuver.component';
 import { CasualtyCardComponent } from './components/casualty-card/casualty-card.component';
 import { TriageComponent } from './components/triage/triage.component';
@@ -56,7 +58,13 @@ import {InjuriesCardComponent} from './components/injuries-card/injuries-card.co
 import { CasesComponent } from './components/cases/cases.component';
 import { CreateInjuryComponent } from './components/create-injury/create-injury.component';
 import { AddManeuverComponent } from './components/add-maneuver/add-maneuver.component';
-import { ManeuverCardComponent } from './components/maneuver-card/maneuver-card.component';
+import { ManeuverListItemComponent } from './components/maneuver-list-item/maneuver-list-item.component';
+import { DialogAddScoreComponent } from './components/dialog-add-score/dialog-add-score.component';
+import { InjuriesComponent } from './components/injuries/injuries.component';
+import { InjuryListItemComponent } from './components/injury-list-item/injury-list-item.component';
+import { InjuryComponent } from './components/injury/injury.component';
+import { BaremInjuryComponent } from './components/barem-injury/barem-injury.component';
+import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 
 
 @NgModule({
@@ -87,10 +95,17 @@ import { ManeuverCardComponent } from './components/maneuver-card/maneuver-card.
     CasesComponent,
     CreateInjuryComponent,
     AddManeuverComponent,
-    ManeuverCardComponent
+    ManeuverListItemComponent,
+    DialogAddScoreComponent,
+    InjuriesComponent,
+    InjuryListItemComponent,
+    BaremInjuryComponent,
+    ConfirmationDialogComponent
   ],
   entryComponents: [
-    AddManeuverComponent
+    AddManeuverComponent,
+    DialogAddScoreComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -117,6 +132,9 @@ import { ManeuverCardComponent } from './components/maneuver-card/maneuver-card.
     MatChipsModule,
     MatDialogModule,
     MatSidenavModule,
+    MatRippleModule,
+    MatMenuModule,
+    MatProgressSpinnerModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
   ],
   providers: [

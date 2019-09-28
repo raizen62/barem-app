@@ -1,0 +1,35 @@
+:host{
+    display: flex;
+    height: 100%;
+}
+
+.screen{
+    padding-bottom: 32px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 24px;
+}
+
+.injury-title{
+    flex-grow: 1;
+    font-family: 'Roboto',
+    sans-serif;
+    font-size: 18px;
+    padding-top: 4px;
+    margin: 0;
+    text-align: center;
+    margin-bottom: 42px;
+}
+
+mat-sidenav {
+  width: 100%;
+}
+
+mat-sidenav-container{
+    width: 100%;
+}
