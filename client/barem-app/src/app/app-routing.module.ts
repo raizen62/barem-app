@@ -12,7 +12,7 @@ import {AdminCreateCaseComponent} from './components/admin/admin-create-case/adm
 import {AdminCreateVictimComponent} from './components/admin/admin-create-victim/admin-create-victim.component';
 import { VictimsListComponent } from './components/victims-list/victims-list.component';
 import { BaremComponent } from './components/barem/barem.component';
-import {AdminViewComponent} from "./components/admin/admin-view/admin-view.component";
+import { AdminViewComponent } from './components/admin/admin-view/admin-view.component';
 import { CasesComponent } from './components/cases/cases.component';
 
 const routes: Routes = [
