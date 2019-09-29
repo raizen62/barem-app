@@ -1,6 +1,18 @@
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { BehaviorSubject } from 'rxjs';
-import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectionStrategy, OnChanges, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  Input,
+  ChangeDetectionStrategy,
+  OnChanges,
+  OnDestroy,
+  AfterViewInit,
+  ViewChild,
+  ElementRef
+} from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { DialogAddScoreComponent } from '../dialog-add-score/dialog-add-score.component';
 import { Maneuver } from 'src/app/types/maneuver';
@@ -12,7 +24,7 @@ import { tap, shareReplay } from 'rxjs/operators';
   styleUrls: ['./add-maneuver.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AddManeuverComponent implements OnInit, OnDestroy {
+export class AddManeuverComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input()
   set maneuver(maneuver: { maneuver: Maneuver, index: number }) {
@@ -40,6 +52,9 @@ export class AddManeuverComponent implements OnInit, OnDestroy {
       8: false
     }
   };
+
+  @ViewChild('screen', { static: false }) screen: ElementRef;
+  scrolling$ = new BehaviorSubject<boolean>(false);
 
   @Output() setManeuver = new EventEmitter<{ maneuver: Maneuver | null, index: number | null }>();
   @Output() backEmitter = new EventEmitter<boolean>();
@@ -150,5 +165,17 @@ export class AddManeuverComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
 
+  }
+
+  ngAfterViewInit() {
+    this.screen.nativeElement.addEventListener('scroll', () => {
+      const scrollTop = this.screen.nativeElement.scrollTop;
+      const scrolling = this.scrolling$.getValue();
+      if (scrollTop > 0 && scrolling === false) {
+        this.scrolling$.next(true);
+      } else if (scrollTop === 0 && scrolling === true) {
+        this.scrolling$.next(false);
+      }
+    }, true);
   }
 }

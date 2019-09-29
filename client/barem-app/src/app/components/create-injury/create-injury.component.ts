@@ -20,6 +20,7 @@ import { tap, shareReplay } from 'rxjs/operators';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { Maneuver } from 'src/app/types/maneuver';
 import { cloneDeep } from 'lodash';
+import { LocationStrategy } from '@angular/common';
 
 @Component({
   selector: 'app-create-injury',
@@ -52,9 +53,11 @@ export class CreateInjuryComponent implements OnInit, OnDestroy, AfterViewInit {
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private injuryService: InjuryService,
+    private locationStrategy: LocationStrategy
   ) { }
 
   ngOnInit() {
+    this.preventBackButton();
     this.injuryForm = this.getInjuryForm();
   }
 
@@ -175,6 +178,21 @@ export class CreateInjuryComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
 
+  }
+
+  preventBackButton() {
+    history.pushState(null, null, location.href);
+    this.locationStrategy.onPopState(() => {
+      // console.log('back clicked');
+      history.pushState(null, null, location.href);
+      // if (this.sidenav.opened) {
+      //   console.log('sidenav is open');
+      //   this.sidenav.close();
+      //   console.log(this.sidenav.opened);
+      // } else {
+      //   this.back();
+      // }
+    });
   }
 
 }

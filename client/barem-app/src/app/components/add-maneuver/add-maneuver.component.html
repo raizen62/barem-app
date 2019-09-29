@@ -1,5 +1,5 @@
-<div class="screen">
-    <div class="header">
+<div #screen class="screen">
+    <div class="header" [class.raised]="scrolling$ | async">
         <button mat-icon-button (click)="back()">
             <mat-icon>arrow_back</mat-icon>
         </button>
@@ -18,7 +18,7 @@
     
     <div class="content">
         <mat-form-field class="example-full-width">
-            <textarea placeholder="Descriere" matInput cdkFocusInitial cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+            <textarea placeholder="Descriere" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize"
                 cdkAutosizeMinRows="1" cdkAutosizeMaxRows="3" [(ngModel)]="description" spellcheck="false"></textarea>
         </mat-form-field>
     
