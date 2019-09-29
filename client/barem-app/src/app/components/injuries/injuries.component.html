@@ -14,20 +14,20 @@
                 <span class="top-bar-title mat-typogrphy">Leziuni</span>
 
                 <div class="actions">
-                    <button mat-icon-button (click)="searching$.next(true); focusSearchInput()">
+                    <button mat-icon-button (click)="openSearch()">
                         <mat-icon>search</mat-icon>
                     </button>
                 </div>
 
                 <div *ngIf="searching$ | async" [@fadeInOut] class="search" [class.searching]="searching$ | async">
-                    <button mat-icon-button (click)="clearSearch(); searching$.next(false)">
+                    <button mat-icon-button (click)="closeSearch();">
                         <mat-icon>arrow_back</mat-icon>
                     </button>
                 
                     <input #searchInput type="text" placeholder="Caută leziune" class="top-bar-title mat-typogrphy search-input" [formControl]="search" spellcheck="false">
                 
                     <div class="actions">
-                        <button [disabled]="!search.value.length" mat-icon-button (click)="clearSearch();">
+                        <button [disabled]="!search.value.length" mat-icon-button (click)="clearSearchInput();">
                             <mat-icon>close</mat-icon>
                         </button>
                     </div>
@@ -40,7 +40,7 @@
         
             <div class="content">
                 <div class="injuries-container">
-                    <app-injury-list-item matRipple *ngFor="let injury of injuries$ | async; trackBy: trackByFn" [injury]="injury" (click)="openInjury(injury)">
+                    <app-injury-list-item *ngFor="let injury of injuries$ | async; trackBy: trackByFn" [injury]="injury" (click)="openInjury(injury)">
                     </app-injury-list-item>
                 </div>
             </div>

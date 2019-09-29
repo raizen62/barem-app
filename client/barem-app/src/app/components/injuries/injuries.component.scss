@@ -35,3 +35,11 @@ mat-sidenav-container {
 .screen{
   padding-bottom: 240px;
 }
+
+app-injury-list-item{
+  transition: background-color 50ms ease-in-out;
+}
+
+app-injury-list-item:hover{
+  background-color: #f8f8f8;
+}

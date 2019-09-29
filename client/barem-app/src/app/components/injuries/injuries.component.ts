@@ -6,6 +6,7 @@ import { Injury } from 'src/app/types/injury';
 import { shareReplay, map, switchMap, tap, startWith, filter, debounceTime, withLatestFrom } from 'rxjs/operators';
 import { MatSidenav } from '@angular/material';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { LocationStrategy } from '@angular/common';
 
 @Component({
   selector: 'app-injuries',
@@ -46,10 +47,12 @@ export class InjuriesComponent implements OnInit, AfterViewInit {
   @Output() back = new EventEmitter<boolean>();
 
   constructor(
-    private injuryService: InjuryService
+    private injuryService: InjuryService,
+    private locationStrategy: LocationStrategy
   ) { }
 
   ngOnInit() {
+    this.preventBackButton();
     this.loading$.next(true);
     this.injuries$ = this.getInjuriesObservable();
   }
@@ -73,8 +76,6 @@ export class InjuriesComponent implements OnInit, AfterViewInit {
   }
 
   openCreatedInjury(injury: Injury) {
-    this.clearSearch();
-    this.refresh$.next(null);
     this.close();
     this.openInjury(injury);
   }
@@ -89,13 +90,21 @@ export class InjuriesComponent implements OnInit, AfterViewInit {
     this.addInjury$.next(false);
     this.selectedInjury$.next(null);
     this.sidenav.close();
-    this.searching$.next(false);
+    this.closeSearch();
   }
 
-  clearSearch() {
-    if (this.search.value !== '') {
-      this.search.setValue('');
-    }
+  clearSearchInput() {
+    this.search.setValue('');
+  }
+
+  openSearch() {
+    this.searching$.next(true);
+    this.focusSearchInput();
+  }
+
+  closeSearch() {
+    this.clearSearchInput();
+    this.searching$.next(false);
   }
 
   focusSearchInput() {
@@ -115,6 +124,14 @@ export class InjuriesComponent implements OnInit, AfterViewInit {
         this.scrolling$.next(false);
       }
     }, true);
+  }
+
+  preventBackButton() {
+    history.pushState(null, null, location.href);
+    this.locationStrategy.onPopState(() => {
+      // console.log('here');
+      history.pushState(null, null, location.href);
+    });
   }
 
 }
