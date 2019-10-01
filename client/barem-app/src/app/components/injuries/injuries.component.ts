@@ -1,12 +1,13 @@
 import { FormControl } from '@angular/forms';
 import { InjuryService } from 'src/app/services/injury.service';
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { Observable, combineLatest, timer, BehaviorSubject } from 'rxjs';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit,
+  Output, EventEmitter, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Observable, combineLatest, timer, BehaviorSubject, Subscription, SubscriptionLike } from 'rxjs';
 import { Injury } from 'src/app/types/injury';
 import { shareReplay, map, switchMap, tap, startWith, filter, debounceTime, withLatestFrom } from 'rxjs/operators';
 import { MatSidenav } from '@angular/material';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { LocationStrategy } from '@angular/common';
+import { LocationStrategy, Location } from '@angular/common';
 
 @Component({
   selector: 'app-injuries',
@@ -29,7 +30,7 @@ import { LocationStrategy } from '@angular/common';
   styleUrls: ['./injuries.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InjuriesComponent implements OnInit, AfterViewInit {
+export class InjuriesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   injuries$!: Observable<Injury[]>;
   addInjury$ = new BehaviorSubject<boolean>(false);
@@ -46,9 +47,12 @@ export class InjuriesComponent implements OnInit, AfterViewInit {
 
   @Output() back = new EventEmitter<boolean>();
 
+  locationSubscription!: SubscriptionLike;
+
   constructor(
     private injuryService: InjuryService,
-    private locationStrategy: LocationStrategy
+    private locationStrategy: LocationStrategy,
+    private location: Location
   ) { }
 
   ngOnInit() {
@@ -127,11 +131,19 @@ export class InjuriesComponent implements OnInit, AfterViewInit {
   }
 
   preventBackButton() {
+    // history.pushState(null, null, location.href);
+    // this.locationStrategy.onPopState(() => {
+    //   history.pushState(null, null, location.href);
+    // });
     history.pushState(null, null, location.href);
-    this.locationStrategy.onPopState(() => {
-      // console.log('here');
+    this.locationSubscription = this.location.subscribe(() => {
+      console.log('injuries back');
       history.pushState(null, null, location.href);
     });
+  }
+
+  ngOnDestroy() {
+    this.locationSubscription.unsubscribe();
   }
 
 }

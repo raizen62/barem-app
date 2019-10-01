@@ -1,5 +1,5 @@
 import { untilDestroyed } from 'ngx-take-until-destroy';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, SubscriptionLike } from 'rxjs';
 import {
   Component,
   OnInit,
@@ -17,6 +17,7 @@ import { MatDialog } from '@angular/material';
 import { DialogAddScoreComponent } from '../dialog-add-score/dialog-add-score.component';
 import { Maneuver } from 'src/app/types/maneuver';
 import { tap, shareReplay } from 'rxjs/operators';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-add-maneuver',
@@ -59,19 +60,19 @@ export class AddManeuverComponent implements OnInit, AfterViewInit, OnDestroy {
   @Output() setManeuver = new EventEmitter<{ maneuver: Maneuver | null, index: number | null }>();
   @Output() backEmitter = new EventEmitter<boolean>();
 
+  locationSubscription!: SubscriptionLike;
+
   constructor(
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private location: Location
   ) { }
 
   ngOnInit() {
+    this.preventBackButton();
   }
 
   private initManeuver(): void {
     this.description = '';
-    // this.getKeys(this.score.average).map(key => this.score.average[key] = false);
-    // this.score.average['0'] = true;
-    // this.getKeys(this.score.maximum).map(key => this.score.maximum[key] = false);
-    // this.editManeuver$.next(null);
     this.score = {
       average: {
         0: true,
@@ -163,10 +164,6 @@ export class AddManeuverComponent implements OnInit, AfterViewInit, OnDestroy {
     this.backEmitter.emit();
   }
 
-  ngOnDestroy() {
-
-  }
-
   ngAfterViewInit() {
     this.screen.nativeElement.addEventListener('scroll', () => {
       const scrollTop = this.screen.nativeElement.scrollTop;
@@ -177,5 +174,17 @@ export class AddManeuverComponent implements OnInit, AfterViewInit, OnDestroy {
         this.scrolling$.next(false);
       }
     }, true);
+  }
+
+  preventBackButton() {
+    this.locationSubscription = this.location.subscribe(() => {
+      console.log('add-maneuver back');
+      this.backEmitter.emit();
+      history.pushState(null, null, location.href);
+    });
+  }
+
+  ngOnDestroy() {
+    this.locationSubscription.unsubscribe();
   }
 }

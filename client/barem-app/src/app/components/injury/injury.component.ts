@@ -1,14 +1,15 @@
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, SubscriptionLike } from 'rxjs';
 import { Injury } from 'src/app/types/injury';
-import { Component, OnInit, Output, EventEmitter, Input, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChild, AfterViewInit, ElementRef, OnDestroy } from '@angular/core';
 import { MatSidenav } from '@angular/material';
+import { LocationStrategy, Location } from '@angular/common';
 
 @Component({
   selector: 'app-injury',
   templateUrl: './injury.component.html',
   styleUrls: ['./injury.component.scss']
 })
-export class InjuryComponent implements OnInit, AfterViewInit {
+export class InjuryComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input()
   set injury(injury: Injury) {
@@ -24,9 +25,14 @@ export class InjuryComponent implements OnInit, AfterViewInit {
   @ViewChild('screen', { static: false }) screen: ElementRef;
   scrolling$ = new BehaviorSubject<boolean>(false);
 
-  constructor() { }
+  locationSubscription!: SubscriptionLike;
+
+  constructor(
+    private location: Location
+  ) { }
 
   ngOnInit() {
+    this.preventBackButton();
   }
 
   editInjury() {
@@ -34,7 +40,7 @@ export class InjuryComponent implements OnInit, AfterViewInit {
   }
 
   back() {
-    this.editInjury$.next(null);
+    // this.editInjury$.next(null);
     this.backEmitter.emit();
   }
 
@@ -63,6 +69,20 @@ export class InjuryComponent implements OnInit, AfterViewInit {
         this.scrolling$.next(false);
       }
     }, true);
+  }
+
+  preventBackButton() {
+    this.locationSubscription = this.location.subscribe(() => {
+      console.log('injury back');
+      if (!this.sidenav.opened) {
+        this.back();
+      }
+      history.pushState(null, null, location.href);
+    });
+  }
+
+  ngOnDestroy() {
+    this.locationSubscription.unsubscribe();
   }
 
 }

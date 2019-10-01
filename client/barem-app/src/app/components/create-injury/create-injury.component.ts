@@ -1,5 +1,5 @@
 import { untilDestroyed } from 'ngx-take-until-destroy';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, SubscriptionLike } from 'rxjs';
 import { InjuryService } from './../../services/injury.service';
 import { FormBuilder, FormArray, FormGroup, FormControl } from '@angular/forms';
 import {
@@ -20,7 +20,7 @@ import { tap, shareReplay } from 'rxjs/operators';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { Maneuver } from 'src/app/types/maneuver';
 import { cloneDeep } from 'lodash';
-import { LocationStrategy } from '@angular/common';
+import { LocationStrategy, Location } from '@angular/common';
 
 @Component({
   selector: 'app-create-injury',
@@ -49,11 +49,14 @@ export class CreateInjuryComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('sidenav', { static: false }) sidenav: MatSidenav;
   @ViewChild('screen', { static: false }) screen: ElementRef;
 
+  locationSubscription!: SubscriptionLike;
+
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private injuryService: InjuryService,
-    private locationStrategy: LocationStrategy
+    private locationStrategy: LocationStrategy,
+    private location: Location
   ) { }
 
   ngOnInit() {
@@ -176,23 +179,19 @@ export class CreateInjuryComponent implements OnInit, OnDestroy, AfterViewInit {
     }, true);
   }
 
-  ngOnDestroy() {
+  preventBackButton() {
+    this.locationSubscription = this.location.subscribe(() => {
+      console.log('create-injury back');
+      if (!this.sidenav.opened) {
+        this.back();
+      }
+      history.pushState(null, null, location.href);
 
+    });
   }
 
-  preventBackButton() {
-    history.pushState(null, null, location.href);
-    this.locationStrategy.onPopState(() => {
-      // console.log('back clicked');
-      history.pushState(null, null, location.href);
-      // if (this.sidenav.opened) {
-      //   console.log('sidenav is open');
-      //   this.sidenav.close();
-      //   console.log(this.sidenav.opened);
-      // } else {
-      //   this.back();
-      // }
-    });
+  ngOnDestroy() {
+    this.locationSubscription.unsubscribe();
   }
 
 }
