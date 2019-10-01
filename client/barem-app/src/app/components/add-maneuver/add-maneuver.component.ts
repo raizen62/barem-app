@@ -39,13 +39,7 @@ export class AddManeuverComponent implements OnInit, AfterViewInit, OnDestroy {
 
   description = '';
   score = {
-    average: {
-      0: true,
-      1: false,
-      2: false,
-      3: false,
-      4: false
-    },
+    average: false,
     maximum: {
       1: false,
       2: false,
@@ -74,13 +68,7 @@ export class AddManeuverComponent implements OnInit, AfterViewInit, OnDestroy {
   private initManeuver(): void {
     this.description = '';
     this.score = {
-      average: {
-        0: true,
-        1: false,
-        2: false,
-        3: false,
-        4: false
-      },
+      average: false,
       maximum: {
         1: false,
         2: false,
@@ -95,9 +83,7 @@ export class AddManeuverComponent implements OnInit, AfterViewInit, OnDestroy {
     this.description = maneuver.description;
     this.setScore(this.score.maximum, maneuver.score.maximum + '');
     if (maneuver.score.average) {
-      this.setScore(this.score.average, maneuver.score.average + '');
-    } else {
-      this.setScore(this.score.average, '0');
+      this.score.average = true;
     }
   }
 
@@ -105,8 +91,8 @@ export class AddManeuverComponent implements OnInit, AfterViewInit, OnDestroy {
     const score = {
       maximum: this.getScore(this.score.maximum)
     };
-    if (!this.score.average['0']) {
-      score['average'] = this.getScore(this.score.average);
+    if (this.score.average && score.maximum > 1) {
+      score['average'] = score.maximum / 2;
     }
     const maneuver = {
       description: this.description,
@@ -141,6 +127,10 @@ export class AddManeuverComponent implements OnInit, AfterViewInit, OnDestroy {
   setScore(score: any, selectedScore: string): void {
     this.getKeys(score).map(key => score[key] = false);
     score[selectedScore] = true;
+
+    if (+selectedScore % 2 !== 0) {
+      this.score.average = false;
+    }
   }
 
   getScore(score: any): number {
