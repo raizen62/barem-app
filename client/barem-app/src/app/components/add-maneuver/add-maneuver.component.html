@@ -21,8 +21,8 @@
             <textarea placeholder="Descriere" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize"
                 cdkAutosizeMinRows="1" cdkAutosizeMaxRows="3" [(ngModel)]="description" spellcheck="false"></textarea>
         </mat-form-field>
-    
-        <div class="custom-form-field">
+
+        <!-- <div class="custom-form-field">
             <label class="mat-label">Punctaj mediu</label>
             <mat-chip-list class="custom-chip-list">
                 <mat-chip *ngFor="let key of getKeys(score.average); let i = index" [selected]="score.average[key]"
@@ -33,7 +33,7 @@
                     <mat-icon>add</mat-icon>
                 </mat-chip>
             </mat-chip-list>
-        </div>
+        </div> -->
     
         <div class="custom-form-field">
             <label class="mat-label">Punctaj maxim</label>
@@ -46,6 +46,10 @@
                     <mat-icon>add</mat-icon>
                 </mat-chip>
             </mat-chip-list>
+        </div>
+
+        <div class="custom-form-field">
+            <mat-slide-toggle labelPosition="before" [disabled]="getScore(score.maximum) % 2 !== 0" [(ngModel)]="score.average">Punctaj mediu</mat-slide-toggle>
         </div>
 
 
