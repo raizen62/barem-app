@@ -62,7 +62,7 @@ export class AddManeuverComponent implements OnInit, AfterViewInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.preventBackButton();
+    // this.preventBackButton();
   }
 
   private initManeuver(): void {
@@ -175,6 +175,6 @@ export class AddManeuverComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.locationSubscription.unsubscribe();
+    // this.locationSubscription.unsubscribe();
   }
 }

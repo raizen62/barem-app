@@ -1,3 +1,6 @@
+import { InjuryV2Component } from './components/injury-v2/injury-v2.component';
+import { CanDeactivateGuardGuard } from './guards/can-deactivate-guard.guard';
+import { CreateInjuryV2Component } from './components/create-injury-v2/create-injury-v2.component';
 import { InjuriesComponent } from './components/injuries/injuries.component';
 import { CreateInjuryComponent } from './components/create-injury/create-injury.component';
 import { TriageComponent } from './components/triage/triage.component';
@@ -14,11 +17,27 @@ import { VictimsListComponent } from './components/victims-list/victims-list.com
 import { BaremComponent } from './components/barem/barem.component';
 import { AdminViewComponent } from './components/admin/admin-view/admin-view.component';
 import { CasesComponent } from './components/cases/cases.component';
+import { InjuriesV2Component } from './components/injuries-v2/injuries-v2.component';
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'injuries', component: InjuriesComponent},
-  {path: 'create-injury', component: CreateInjuryComponent},
+  { path: '', component: HomeComponent, data: { state: '0' } },
+  { path: 'injuries',
+    children: [
+      { path: '', component: InjuriesV2Component, data: { state: '1' } },
+      { path: 'create', component: CreateInjuryV2Component, canDeactivate: [CanDeactivateGuardGuard], data: { state: '2' } },
+      { path: ':id',
+        children: [
+          { path: '', component: InjuryV2Component, data: { state: '2' } },
+          { path: 'edit', component: CreateInjuryV2Component, canDeactivate: [CanDeactivateGuardGuard], data: { state: '3' } }
+        ],
+        data: { state: '2' }
+      },
+    ],
+    data: { state: '1' }
+  },
+  // { path: 'injury/:id', component: InjuryV2Component, data: {state: '3'} },
+  { path: 'create-injury', component: CreateInjuryV2Component, canDeactivate: [CanDeactivateGuardGuard], data: { state: '3' } },
+  { path: 'update-injury/:id', component: CreateInjuryV2Component, canDeactivate: [CanDeactivateGuardGuard] },
   {path: 'cases', component: CasesComponent},
   {path: 'triage', component: TriageComponent},
   {path: 'access-case', component: AccessCaseComponent},
@@ -29,7 +48,7 @@ const routes: Routes = [
   {path: 'admin', component: AdminComponent},
   {path: 'admin/create-case', component: AdminCreateCaseComponent},
   {path: 'admin/create-victim', component: AdminCreateVictimComponent},
-  {path: 'admin/view', component: AdminViewComponent}
+  {path: 'admin/view', component: AdminViewComponent},
 ];
 
 @NgModule({

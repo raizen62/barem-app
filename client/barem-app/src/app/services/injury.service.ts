@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import { Injury } from '../types/injury';
+import { filter, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,12 @@ export class InjuryService {
 
   getInjuries(): Observable<any> {
     return this.http.get('https://barem-dezastre.herokuapp.com/injuries');
+  }
+
+  getInjury(id: string): Observable<any> {
+    return this.http.get('https://barem-dezastre.herokuapp.com/injuries').pipe(
+      map(injuries => (injuries as Injury[]).filter(injury => injury._id === id)[0])
+    );
   }
 
   addVictim(hero) {

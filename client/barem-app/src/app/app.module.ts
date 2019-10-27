@@ -65,6 +65,9 @@ import { InjuryListItemComponent } from './components/injury-list-item/injury-li
 import { InjuryComponent } from './components/injury/injury.component';
 import { BaremInjuryComponent } from './components/barem-injury/barem-injury.component';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
+import { CreateInjuryV2Component } from './components/create-injury-v2/create-injury-v2.component';
+import { InjuriesV2Component } from './components/injuries-v2/injuries-v2.component';
+import { InjuryV2Component } from './components/injury-v2/injury-v2.component';
 
 
 @NgModule({
@@ -100,7 +103,10 @@ import { ConfirmationDialogComponent } from './components/confirmation-dialog/co
     InjuriesComponent,
     InjuryListItemComponent,
     BaremInjuryComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    CreateInjuryV2Component,
+    InjuriesV2Component,
+    InjuryV2Component
   ],
   entryComponents: [
     AddManeuverComponent,
