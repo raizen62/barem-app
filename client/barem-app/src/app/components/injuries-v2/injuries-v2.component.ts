@@ -3,7 +3,7 @@ import { InjuryService } from 'src/app/services/injury.service';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { Injury } from 'src/app/types/injury';
 import { FormControl } from '@angular/forms';
-import { map, withLatestFrom } from 'rxjs/operators';
+import { map, startWith, switchMap, shareReplay } from 'rxjs/operators';
 import { Location } from '@angular/common';
 
 @Component({
@@ -14,12 +14,14 @@ import { Location } from '@angular/common';
 export class InjuriesV2Component implements OnInit, AfterViewInit {
 
   injuries$!: Observable<Injury[]>;
-  loading$ = new BehaviorSubject<boolean>(false);
+  isLoading$ = new BehaviorSubject<boolean>(false);
   search = new FormControl('');
   search$ = new BehaviorSubject<string>('');
 
   @ViewChild('screen', { static: false }) screen: ElementRef;
   scrolling$ = new BehaviorSubject<boolean>(false);
+  @ViewChild('searchInput', { static: false }) searchInput: ElementRef;
+  searching$ = new BehaviorSubject<boolean>(false);
 
   constructor(
     private injuryService: InjuryService,
@@ -31,9 +33,36 @@ export class InjuriesV2Component implements OnInit, AfterViewInit {
   }
 
   private getInjuries(): Observable<Injury[]> {
-    return this.injuryService.getInjuries().pipe(
-      map(injuries => injuries.sort((a, b) => a.name.localeCompare(b.name)))
+    // return this.injuryService.getInjuries().pipe(
+    //   map(injuries => injuries.sort((a, b) => a.name.localeCompare(b.name)))
+    // );
+
+    return this.search.valueChanges.pipe(
+      startWith(''),
+      switchMap(searchText => this.injuryService.getInjuries().pipe(
+        map(injuries => injuries.filter(injury => injury.name.toLowerCase().includes(searchText.toLowerCase()))
+        .sort((a, b) => a.name.localeCompare(b.name)))
+      )),
+      shareReplay(1)
     );
+  }
+
+  openSearch() {
+    this.searching$.next(true);
+    this.focusSearchInput();
+  }
+
+  clearSearchInput() {
+    this.search.setValue('');
+  }
+
+  closeSearch() {
+    this.clearSearchInput();
+    this.searching$.next(false);
+  }
+
+  focusSearchInput() {
+    setTimeout(() => this.searchInput.nativeElement.focus(), 0);
   }
 
   back() {
