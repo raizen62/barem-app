@@ -3,7 +3,7 @@ import { InjuryService } from 'src/app/services/injury.service';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { Injury } from 'src/app/types/injury';
 import { FormControl } from '@angular/forms';
-import { map, startWith, switchMap, shareReplay } from 'rxjs/operators';
+import { map, startWith, switchMap, shareReplay, tap } from 'rxjs/operators';
 import { Location } from '@angular/common';
 
 @Component({
@@ -14,7 +14,7 @@ import { Location } from '@angular/common';
 export class InjuriesV2Component implements OnInit, AfterViewInit {
 
   injuries$!: Observable<Injury[]>;
-  isLoading$ = new BehaviorSubject<boolean>(false);
+  isLoading$ = new BehaviorSubject<boolean>(true);
   search = new FormControl('');
   search$ = new BehaviorSubject<string>('');
 
@@ -33,16 +33,13 @@ export class InjuriesV2Component implements OnInit, AfterViewInit {
   }
 
   private getInjuries(): Observable<Injury[]> {
-    // return this.injuryService.getInjuries().pipe(
-    //   map(injuries => injuries.sort((a, b) => a.name.localeCompare(b.name)))
-    // );
-
     return this.search.valueChanges.pipe(
       startWith(''),
       switchMap(searchText => this.injuryService.getInjuries().pipe(
         map(injuries => injuries.filter(injury => injury.name.toLowerCase().includes(searchText.toLowerCase()))
         .sort((a, b) => a.name.localeCompare(b.name)))
       )),
+      tap(() => this.isLoading$.next(false)),
       shareReplay(1)
     );
   }
