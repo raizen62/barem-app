@@ -1,0 +1,5 @@
+<div *ngIf="injuries$?.length" class="card-list">
+  <app-injuries-card *ngFor="let injury of injuries$" [injury]="injury"></app-injuries-card>
+</div>
+
+<p *ngIf="!injuries$?.length">Nu exista leziuni.</p>

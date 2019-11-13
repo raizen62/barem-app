@@ -1,0 +1,51 @@
+mat-sidenav {
+  width: 100%;
+}
+
+mat-sidenav-content {
+  position: relative;
+  height: 100%;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+
+mat-sidenav-container {
+  height: 100%;
+}
+
+.footer{
+  left: auto;
+  right: 24px;
+  transform: none;
+}
+
+.search-input{
+  border: none;
+  outline: none;
+}
+
+.mat-fab ::ng-deep .mat-button-wrapper{
+  padding: 0;
+}
+
+.loader-container{
+  height: calc(100% - 52px);
+}
+
+.screen{
+  padding-bottom: 240px;
+}
+
+app-injury-list-item{
+  transition: background-color 50ms ease-in-out;
+}
+
+app-injury-list-item:hover{
+  background-color: #f8f8f8;
+}
+
+.search{
+  .actions{
+    min-width: 40px;
+  }
+}
