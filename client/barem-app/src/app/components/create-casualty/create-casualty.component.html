@@ -13,16 +13,16 @@
                 </button>
 
                 <span
-                    class="top-bar-title mat-typogrphy">{{ (editInjury$ | async) ? 'Modifică victima' : 'Creează o victimă' }}</span>
+                    class="top-bar-title mat-typogrphy">{{ 'Creează o victimă' }}</span>
 
-                <div class="actions">
+                <!-- <div class="actions">
                     <button *ngIf="editInjury$ | async" mat-icon-button [matMenuTriggerFor]="menu">
                         <mat-icon>more_vert</mat-icon>
                     </button>
                     <mat-menu #menu="matMenu">
                         <button mat-menu-item (click)="delete()">Șterge</button>
                     </mat-menu>
-                </div>
+                </div> -->
             </div>
             <div class="content">
                 <mat-form-field>
@@ -64,7 +64,7 @@
                 <div class="actions">
                     <button mat-raised-button color="accent"
                         [disabled]="!casualtyForm.value.name" (click)="log()">
-                        {{ (editInjury$ | async) ? 'Salvează' : 'Creează' }}</button>
+                        {{ 'Creează' }}</button>
                 </div>
             </div>
             <div *ngIf="loading$ | async" class="overlay">

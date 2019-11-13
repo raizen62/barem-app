@@ -6,15 +6,6 @@
             </button>
             
             <span class="top-bar-title mat-typogrphy">Selectează leziunile</span>
-            
-            <div class="actions" *ngIf="editManeuver$ | async">
-                <button mat-icon-button [matMenuTriggerFor]="menu">
-                    <mat-icon>more_vert</mat-icon>
-                </button>
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="delete()">Șterge</button>
-                </mat-menu>
-            </div>
         </div>
         <div class="injuries-chip-list-container">
             <mat-form-field class="injuries-chip-list" [floatLabel]="'never'">
@@ -30,7 +21,6 @@
                         spellcheck="false"
                         [matChipInputFor]="chipList"
                         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                        (matChipInputTokenEnd)="add($event)"
                         (focus)="placeholder = ''"
                         (blur)="placeholder = 'Cauta...'">
                 </mat-chip-list>
