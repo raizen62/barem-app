@@ -1,3 +1,6 @@
+import { CreateCasualtyComponent } from './components/create-casualty/create-casualty.component';
+import { CreateCaseV2Component } from './components/create-case-v2/create-case-v2.component';
+import { CasesV2Component } from './components/cases-v2/cases-v2.component';
 import { InjuryV2Component } from './components/injury-v2/injury-v2.component';
 import { CanDeactivateGuardGuard } from './guards/can-deactivate-guard.guard';
 import { CreateInjuryV2Component } from './components/create-injury-v2/create-injury-v2.component';
@@ -35,20 +38,27 @@ const routes: Routes = [
     ],
     data: { state: '1' }
   },
+  { path: 'cases',
+    children: [
+      { path: '', component: CasesV2Component, data: { state: '1' } },
+      { path: 'create', component: CreateCaseV2Component, canDeactivate: [CanDeactivateGuardGuard], data: { state: '2' } }
+    ]
+  },
+  { path: 'create-casualty', component: CreateCasualtyComponent, canDeactivate: [CanDeactivateGuardGuard], data: { state: '1' } }
   // { path: 'injury/:id', component: InjuryV2Component, data: {state: '3'} },
-  { path: 'create-injury', component: CreateInjuryV2Component, canDeactivate: [CanDeactivateGuardGuard], data: { state: '3' } },
-  { path: 'update-injury/:id', component: CreateInjuryV2Component, canDeactivate: [CanDeactivateGuardGuard] },
-  {path: 'cases', component: CasesComponent},
-  {path: 'triage', component: TriageComponent},
-  {path: 'access-case', component: AccessCaseComponent},
-  {path: 'case/:id', component: CaseComponent},
-  {path: 'case/:id/barem/:victimId', component: BaremComponent},
-  {path: 'create-case', component: CreateCaseComponent},
-  {path: 'create-case/victims-list', component: VictimsListComponent},
-  {path: 'admin', component: AdminComponent},
-  {path: 'admin/create-case', component: AdminCreateCaseComponent},
-  {path: 'admin/create-victim', component: AdminCreateVictimComponent},
-  {path: 'admin/view', component: AdminViewComponent},
+  // { path: 'create-injury', component: CreateInjuryV2Component, canDeactivate: [CanDeactivateGuardGuard], data: { state: '3' } },
+  // { path: 'update-injury/:id', component: CreateInjuryV2Component, canDeactivate: [CanDeactivateGuardGuard] },
+  // {path: 'cases', component: CasesComponent},
+  // {path: 'triage', component: TriageComponent},
+  // {path: 'access-case', component: AccessCaseComponent},
+  // {path: 'case/:id', component: CaseComponent},
+  // {path: 'case/:id/barem/:victimId', component: BaremComponent},
+  // {path: 'create-case', component: CreateCaseComponent},
+  // {path: 'create-case/victims-list', component: VictimsListComponent},
+  // {path: 'admin', component: AdminComponent},
+  // {path: 'admin/create-case', component: AdminCreateCaseComponent},
+  // {path: 'admin/create-victim', component: AdminCreateVictimComponent},
+  // {path: 'admin/view', component: AdminViewComponent},
 ];
 
 @NgModule({

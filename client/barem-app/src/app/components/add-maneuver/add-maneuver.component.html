@@ -17,23 +17,10 @@
     </div>
     
     <div class="content">
-        <mat-form-field class="example-full-width">
+        <mat-form-field>
             <textarea placeholder="Descriere" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize"
                 cdkAutosizeMinRows="1" cdkAutosizeMaxRows="3" [(ngModel)]="description" spellcheck="false"></textarea>
         </mat-form-field>
-
-        <!-- <div class="custom-form-field">
-            <label class="mat-label">Punctaj mediu</label>
-            <mat-chip-list class="custom-chip-list">
-                <mat-chip *ngFor="let key of getKeys(score.average); let i = index" [selected]="score.average[key]"
-                    (click)="setScore(score.average, key)">
-                    {{ key == '0'? '-' : key}}
-                </mat-chip>
-                <mat-chip class="add-chip" (click)="openAddScoreDialog('average')">
-                    <mat-icon>add</mat-icon>
-                </mat-chip>
-            </mat-chip-list>
-        </div> -->
     
         <div class="custom-form-field">
             <label class="mat-label">Punctaj maxim</label>
@@ -56,7 +43,7 @@
         <div class="footer">
             <div class="actions">
                 <button mat-raised-button color="accent" [disabled]="!description || !getScore(score.maximum)"
-                    (click)="save();">{{ (editManeuver$ | async) ? 'Salvează': 'Adaugă' }}</button>
+                    (click)="save()">{{ (editManeuver$ | async) ? 'Salvează': 'Adaugă' }}</button>
             </div>
         </div>
     

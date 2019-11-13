@@ -68,6 +68,10 @@ import { ConfirmationDialogComponent } from './components/confirmation-dialog/co
 import { CreateInjuryV2Component } from './components/create-injury-v2/create-injury-v2.component';
 import { InjuriesV2Component } from './components/injuries-v2/injuries-v2.component';
 import { InjuryV2Component } from './components/injury-v2/injury-v2.component';
+import { CreateCaseV2Component } from './components/create-case-v2/create-case-v2.component';
+import { CasesV2Component } from './components/cases-v2/cases-v2.component';
+import { CreateCasualtyComponent } from './components/create-casualty/create-casualty.component';
+import { AddInjuriesComponent } from './components/add-injuries/add-injuries.component';
 
 
 @NgModule({
@@ -106,7 +110,11 @@ import { InjuryV2Component } from './components/injury-v2/injury-v2.component';
     ConfirmationDialogComponent,
     CreateInjuryV2Component,
     InjuriesV2Component,
-    InjuryV2Component
+    InjuryV2Component,
+    CreateCaseV2Component,
+    CasesV2Component,
+    CreateCasualtyComponent,
+    AddInjuriesComponent
   ],
   entryComponents: [
     AddManeuverComponent,

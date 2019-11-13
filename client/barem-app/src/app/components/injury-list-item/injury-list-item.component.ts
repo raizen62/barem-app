@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Injury } from 'src/app/types/injury';
 
 @Component({
@@ -9,6 +9,10 @@ import { Injury } from 'src/app/types/injury';
 export class InjuryListItemComponent implements OnInit {
 
   @Input() injury!: Injury;
+  @Input() selectable?: boolean;
+
+  @Output() select: EventEmitter<Injury>;
+  @Output() remove: EventEmitter<Injury>;
 
   constructor() { }
 

@@ -20,7 +20,7 @@ import { tap, shareReplay, switchMap, filter } from 'rxjs/operators';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { Maneuver } from 'src/app/types/maneuver';
 import { cloneDeep } from 'lodash';
-import { LocationStrategy, Location } from '@angular/common';
+import { Location } from '@angular/common';
 import { CanDeactivateGuardGuard } from 'src/app/guards/can-deactivate-guard.guard';
 import { RouterStateSnapshot, ActivatedRoute, UrlTree, Router } from '@angular/router';
 
